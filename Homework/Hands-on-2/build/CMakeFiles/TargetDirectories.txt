@@ -1,3 +1,0 @@
-/home/sin/repos/CPSC_370_Intro_To_Computer_Cryptology/Homework/Hands-on-2/build/CMakeFiles/ShiftCipher.dir
-/home/sin/repos/CPSC_370_Intro_To_Computer_Cryptology/Homework/Hands-on-2/build/CMakeFiles/edit_cache.dir
-/home/sin/repos/CPSC_370_Intro_To_Computer_Cryptology/Homework/Hands-on-2/build/CMakeFiles/rebuild_cache.dir
