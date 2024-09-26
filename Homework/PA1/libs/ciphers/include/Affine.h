@@ -1,14 +1,12 @@
 #pragma once
-
 #include <cstdint>
-#include <string>
-#include <vector>
 
 #include "Utility.h"
 namespace Affine {
     struct AffineFunction {
-        int a;
-        int b;
+        uint32_t m_a;
+        uint32_t m_b;
+        AffineFunction ( const uint32_t &a, const uint32_t &b );
     };
 
     Utility::CipherVector applyCipher ( const Utility::CipherVector &vec,
