@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UTILITY_H
+#define UTILITY_H
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -14,4 +15,5 @@ namespace Utility {
 
     std::vector< uint8_t > toNumVector ( const std::string &text );
     std::string toString ( const CipherVector &vec );
-}  // namespace Utility
+};  // namespace Utility
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AFFINE_H
+#define AFFINE_H
 #include <cstdint>
 
 #include "Utility.h"
@@ -17,3 +18,4 @@ namespace Affine {
     uint8_t inverse ( const uint8_t &num );
 
 };  // namespace Affine
+#endif

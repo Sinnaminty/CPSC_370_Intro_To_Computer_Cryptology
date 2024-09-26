@@ -1,9 +1,8 @@
 project(ciphers)
 
 add_library(${PROJECT_NAME}
-Affine.cpp
-Utility.cpp
-Vigenere.cpp
+  Affine.cpp
+  Utility.cpp
 )
 
 add_library(libs::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -18,5 +17,5 @@ PRIVATE
 
 target_compile_features(${PROJECT_NAME}
 PRIVATE
-  cxx_std_20
+  cxx_std_11
 )
