@@ -6,7 +6,7 @@
 
 #include "include/ciphers/Utility.h"
 namespace Affine {
-    AffineFunction::AffineFunction ( const uint32_t &a, const uint32_t &b )
+    AffineFunction::AffineFunction ( const int16_t &a, const int16_t &b )
         : m_a ( a )
         , m_b ( b ) {}
 
@@ -15,9 +15,9 @@ namespace Affine {
         return Utility::CipherVector (
             std::accumulate ( vec.m_vec.begin ( ),
                               vec.m_vec.end ( ),
-                              std::vector< uint8_t > { },
-                              [ func, vec ] ( std::vector< uint8_t > acc,
-                                              const uint8_t &num ) {
+                              std::vector< int16_t > { },
+                              [ func, vec ] ( std::vector< int16_t > acc,
+                                              const int16_t &num ) {
                                   acc.push_back (
                                       applyFunc ( num, func, vec.m_opType ) );
                                   return acc;
@@ -25,16 +25,17 @@ namespace Affine {
             vec.m_opType );
     }
 
-    uint8_t applyFunc ( const uint8_t &num,
+    int16_t applyFunc ( const int16_t &num,
                         const AffineFunction &func,
                         const Utility::OpType &opType ) {
         return opType == Utility::OpType::ENCRYPT
-                   ? ( ( func.m_a * num ) + func.m_b ) % 26
-                   : ( inverse ( func.m_a ) * ( num - func.m_b ) ) % 26;
+                   ? Utility::posMod ( ( ( func.m_a * num ) + func.m_b ) )
+                   : Utility::posMod ( inverse ( func.m_a )
+                                       * ( num - func.m_b ) );
     }
 
-    uint8_t inverse ( const uint8_t &num ) {
-        const std::map< uint8_t, uint8_t > inverseMap {
+    int16_t inverse ( const int16_t &num ) {
+        const std::map< int16_t, int16_t > inverseMap {
             { 1, 3 },   { 3, 9 },   { 5, 21 },  { 7, 15 },
             { 9, 3 },   { 11, 19 }, { 15, 7 },  { 17, 23 },
             { 19, 11 }, { 21, 5 },  { 23, 17 }, { 25, 25 }

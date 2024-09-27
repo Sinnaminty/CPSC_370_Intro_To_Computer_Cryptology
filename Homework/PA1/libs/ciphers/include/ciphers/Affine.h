@@ -5,17 +5,17 @@
 #include "Utility.h"
 namespace Affine {
     struct AffineFunction {
-        uint32_t m_a;
-        uint32_t m_b;
-        AffineFunction ( const uint32_t &a, const uint32_t &b );
+        int16_t m_a;
+        int16_t m_b;
+        AffineFunction ( const int16_t &a, const int16_t &b );
     };
 
     Utility::CipherVector applyCipher ( const Utility::CipherVector &vec,
                                         const AffineFunction &func );
-    uint8_t applyFunc ( const uint8_t &num,
+    int16_t applyFunc ( const int16_t &num,
                         const AffineFunction &func,
                         const Utility::OpType &opType );
-    uint8_t inverse ( const uint8_t &num );
+    int16_t inverse ( const int16_t &num );
 
 };  // namespace Affine
 #endif

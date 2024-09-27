@@ -15,7 +15,7 @@ void printAffine ( ) {
               << "\n";
 
     std::cout << "2.) The ciphertext 'MZDVEZC' was encrypted using the affine "
-                 "function 5x + 12. Decrypt it.\n ";
+                 "function 5x + 12. Decrypt it.\n";
     std::cout << Utility::toString ( Affine::applyCipher (
         Utility::CipherVector ( Utility::toNumVector ( "MZDVEZC" ),
                                 Utility::OpType ( Utility::OpType::DECRYPT ) ),
