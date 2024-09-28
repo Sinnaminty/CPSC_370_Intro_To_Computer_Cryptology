@@ -16,6 +16,9 @@ namespace Affine {
                         const AffineFunction &func,
                         const Utility::OpType &opType );
     int16_t inverse ( const int16_t &num );
+    std::vector< Utility::CipherVector > bruteForceCipher (
+        const Utility::CipherVector &vec,
+        const AffineFunction &func );
 
 };  // namespace Affine
 #endif

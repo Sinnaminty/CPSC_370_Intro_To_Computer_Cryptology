@@ -1,8 +1,10 @@
 #include "include/ciphers/Affine.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <map>
 #include <numeric>
+#include <vector>
 
 #include "include/ciphers/Utility.h"
 namespace Affine {
@@ -41,5 +43,16 @@ namespace Affine {
             { 19, 11 }, { 21, 5 },  { 23, 17 }, { 25, 25 }
         };
         return inverseMap.find ( num )->second;
+    }
+
+    std::vector< Utility::CipherVector > bruteForceCipher (
+        const Utility::CipherVector &vec,
+        const AffineFunction &func ) {
+        std::vector< Utility::CipherVector > returnVec;
+        for ( int b = 0; b < 26; b++ ) {
+            returnVec.push_back (
+                applyCipher ( vec, AffineFunction ( func.m_a, b ) ) );
+        }
+        return returnVec;
     }
 }  // namespace Affine
