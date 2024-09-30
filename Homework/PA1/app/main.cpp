@@ -2,9 +2,13 @@
 #include <ciphers/Shift.h>
 #include <ciphers/Utility.h>
 
+#include <algorithm>
 #include <iostream>
 
 void printAffine ( ) {
+    /*
+     * QUESTION 1
+     */
     std::cout << "1.) Encrypt the plain text message 'cleopatra' using the "
                  "affine function 7x + 8.\n";
     std::cout << Utility::toString (
@@ -12,6 +16,10 @@ void printAffine ( ) {
                               Affine::AffineFunction ( 7, 8 ),
                               Utility::OpType::ENCRYPT ) )
               << "\n\n";
+
+    /*
+     * QUESTION 2
+     */
 
     std::cout << "2.) The ciphertext 'MZDVEZC' was encrypted using the affine "
                  "function 5x + 12. Decrypt it.\n";
@@ -21,15 +29,27 @@ void printAffine ( ) {
                               Utility::OpType::DECRYPT ) )
               << "\n\n";
 
+    /*
+     * QUESTION 3
+     */
+
     std::cout << "3.) The following ciphertext was encrypted by an affine "
                  "cipher using the function 3x + b for some "
                  "b:\nTCABTIQMFHEQQMRMVMTMAQ\nDecrypt it.\n";
-    for ( const Utility::CipherVector &vec : Affine::bruteForceCipher (
-              Utility::toNumVector ( "TCABTIQMFHEQQMRMVMTMAQ" ),
-              Affine::AffineFunction ( 3, 0 ) ) ) {
-        std::cout << Utility::toString ( vec ) << "\n";
-    }
+    auto cipherVectors = Affine::bruteForceCipher (
+        Utility::toNumVector ( "TCABTIQMFHEQQMRMVMTMAQ" ),
+        Affine::AffineFunction ( 3, 0 ) );
+    std::for_each ( cipherVectors.begin ( ),
+                    cipherVectors.end ( ),
+                    [ index = 0 ] ( const Utility::CipherVector &vec ) mutable {
+                        std::cout << "b = " << index++ << ": "
+                                  << Utility::toString ( vec ) << "\n";
+                    } );
     std::cout << "\n";
+
+    /*
+     * QUESTION 4
+     */
 
     std::cout << "4.) The following cipher text was encrypted by an affine "
                  "cipher:\nEDSGICKXHUKLZVEQZVKXWKZUKCVUH\nThe first two "
@@ -44,6 +64,10 @@ void printAffine ( ) {
 }
 
 void printTransposition ( ) {
+    /*
+     * QUESTION 1
+     */
+
     std::cout
         << "1.) The following ciphertext was the output of a shift "
            "cipher:\nLCLLEWLJAZLNNZMVYIYLHRMHZA\nBy performing a frequency "
@@ -62,6 +86,10 @@ void printTransposition ( ) {
         Utility::OpType::DECRYPT ) )
               << "\n\n";
 
+    /*
+     * QUESTION 2
+     */
+
     std::cout
         << "2.) The following was encrypted using by row transposition method. "
            "Implement functions to perform encryption/decryption.\n\ta.) "
@@ -70,12 +98,18 @@ void printTransposition ( ) {
            "7)\n\tb.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE' "
            "using double transposition with the key (3, 5, 1, 6, 2, 4)\n";
 }
-void printVigenere ( ) {}
-void printHill ( ) {}
+void printHill ( ) {
+    /*
+     * QUESTION 1
+     */
+
+    /*
+     * QUESTION 2
+     */
+}
 int main ( int argc, const char *argv[] ) {
     printAffine ( );
     printTransposition ( );
-    printVigenere ( );
     printHill ( );
     return 0;
 }
