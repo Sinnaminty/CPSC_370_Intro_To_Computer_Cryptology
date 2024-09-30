@@ -14,7 +14,9 @@ namespace Utility {
     };
 
     std::vector< int16_t > toNumVector ( const std::string &text );
+
     std::string toString ( const CipherVector &vec );
+
     int16_t posMod ( const int16_t &num );
 
 };  // namespace Utility

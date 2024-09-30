@@ -30,6 +30,7 @@ namespace Shift {
                        ? Utility::posMod ( num + key )
                        : Utility::posMod ( num - key );
         };
+
         return Utility::CipherVector (
             std::accumulate (
                 vec.begin ( ),
