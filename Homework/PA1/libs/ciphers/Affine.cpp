@@ -1,6 +1,5 @@
 #include "include/ciphers/Affine.h"
 
-#include <algorithm>
 #include <cstdint>
 #include <map>
 #include <numeric>
@@ -12,28 +11,26 @@ namespace Affine {
         : m_a ( a )
         , m_b ( b ) {}
 
-    Utility::CipherVector applyCipher ( const Utility::CipherVector &vec,
-                                        const AffineFunction &func ) {
+    Utility::CipherVector applyCipher ( const std::vector< int16_t > &vec,
+                                        const AffineFunction &func,
+                                        const Utility::OpType &opType ) {
+        auto applyFunc = [ &func, &opType ] ( const int16_t &num ) -> int16_t {
+            return opType == Utility::OpType::ENCRYPT
+                       ? Utility::posMod ( ( func.m_a * num ) + func.m_b )
+                       : Utility::posMod ( inverse ( func.m_a )
+                                           * ( num - func.m_b ) );
+        };
+
         return Utility::CipherVector (
-            std::accumulate ( vec.m_vec.begin ( ),
-                              vec.m_vec.end ( ),
+            std::accumulate ( vec.begin ( ),
+                              vec.end ( ),
                               std::vector< int16_t > { },
-                              [ func, vec ] ( std::vector< int16_t > acc,
-                                              const int16_t &num ) {
-                                  acc.push_back (
-                                      applyFunc ( num, func, vec.m_opType ) );
+                              [ &applyFunc ] ( std::vector< int16_t > acc,
+                                               const int16_t &num ) {
+                                  acc.push_back ( applyFunc ( num ) );
                                   return acc;
                               } ),
-            vec.m_opType );
-    }
-
-    int16_t applyFunc ( const int16_t &num,
-                        const AffineFunction &func,
-                        const Utility::OpType &opType ) {
-        return opType == Utility::OpType::ENCRYPT
-                   ? Utility::posMod ( ( ( func.m_a * num ) + func.m_b ) )
-                   : Utility::posMod ( inverse ( func.m_a )
-                                       * ( num - func.m_b ) );
+            opType );
     }
 
     int16_t inverse ( const int16_t &num ) {
@@ -46,12 +43,13 @@ namespace Affine {
     }
 
     std::vector< Utility::CipherVector > bruteForceCipher (
-        const Utility::CipherVector &vec,
+        const std::vector< int16_t > &vec,
         const AffineFunction &func ) {
         std::vector< Utility::CipherVector > returnVec;
         for ( int b = 0; b < 26; b++ ) {
-            returnVec.push_back (
-                applyCipher ( vec, AffineFunction ( func.m_a, b ) ) );
+            returnVec.push_back ( applyCipher ( vec,
+                                                AffineFunction ( func.m_a, b ),
+                                                Utility::OpType::DECRYPT ) );
         }
         return returnVec;
     }

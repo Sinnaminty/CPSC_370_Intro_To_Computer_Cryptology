@@ -1,6 +1,7 @@
 #ifndef AFFINE_H
 #define AFFINE_H
 #include <cstdint>
+#include <vector>
 
 #include "Utility.h"
 namespace Affine {
@@ -10,15 +11,14 @@ namespace Affine {
         AffineFunction ( const int16_t &a, const int16_t &b );
     };
 
-    Utility::CipherVector applyCipher ( const Utility::CipherVector &vec,
-                                        const AffineFunction &func );
-    int16_t applyFunc ( const int16_t &num,
-                        const AffineFunction &func,
-                        const Utility::OpType &opType );
-    int16_t inverse ( const int16_t &num );
-    std::vector< Utility::CipherVector > bruteForceCipher (
-        const Utility::CipherVector &vec,
-        const AffineFunction &func );
+    Utility::CipherVector applyCipher ( const std::vector< int16_t > &vec,
+                                        const AffineFunction &func,
+                                        const Utility::OpType &opType );
 
+    int16_t inverse ( const int16_t &num );
+
+    std::vector< Utility::CipherVector > bruteForceCipher (
+        const std::vector< int16_t > &vec,
+        const AffineFunction &func );
 };  // namespace Affine
 #endif
