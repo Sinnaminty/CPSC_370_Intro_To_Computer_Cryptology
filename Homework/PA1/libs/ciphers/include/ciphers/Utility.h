@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 namespace Utility {
-    enum class OpType { ENCRYPT, DECRYPT };
+    enum class OpType { ENCRYPT, DECRYPT, FREQUENCY };
 
     struct CipherVector {
         std::vector< int16_t > m_vec;
@@ -16,5 +16,6 @@ namespace Utility {
     std::vector< int16_t > toNumVector ( const std::string &text );
     std::string toString ( const CipherVector &vec );
     int16_t posMod ( const int16_t &num );
+
 };  // namespace Utility
 #endif

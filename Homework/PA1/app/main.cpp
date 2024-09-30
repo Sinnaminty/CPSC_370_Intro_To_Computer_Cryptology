@@ -1,4 +1,5 @@
 #include <ciphers/Affine.h>
+#include <ciphers/Shift.h>
 #include <ciphers/Utility.h>
 
 #include <iostream>
@@ -51,6 +52,9 @@ void printTransposition ( ) {
            "cipher:\nLCLLEWLJAZLNNZMVYIYLHRMHZA\nBy performing a frequency "
            "count, guess the key used in the cipher. Use the computer to test "
            "your hypothesis. What is the decrypted plaintext?\n";
+    std::cout << "Frequency Count:\n";
+    std::cout << Utility::toString ( Shift::frequencyCount (
+        Utility::toNumVector ( "LCLLEWLJAZLNNZMVYIYLHRMHZA" ) ) );
     std::cout
         << "2.) The following was encrypted using by row transposition method. "
            "Implement functions to perform encryption/decryption.\n\ta.) "
