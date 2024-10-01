@@ -4,6 +4,7 @@ add_library(${PROJECT_NAME}
   Affine.cpp
   Utility.cpp
   Shift.cpp
+  Transposition.cpp
 )
 
 add_library(libs::${PROJECT_NAME} ALIAS ${PROJECT_NAME})

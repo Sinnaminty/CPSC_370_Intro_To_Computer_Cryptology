@@ -1,9 +1,12 @@
 #include <ciphers/Affine.h>
 #include <ciphers/Shift.h>
+#include <ciphers/Transposition.h>
 #include <ciphers/Utility.h>
 
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
+#include <vector>
 
 void printAffine ( ) {
     /*
@@ -95,9 +98,24 @@ void printTransposition ( ) {
            "Implement functions to perform encryption/decryption.\n\ta.) "
            "Encrypt the plaintext 'attck postponed until two am' using "
            "double transposition with the key (4, 3, 1, 2, 5, 6, "
-           "7)\n\tb.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE' "
-           "using double transposition with the key (3, 5, 1, 6, 2, 4)\n";
+           "7)\n";
+
+    std::cout << Utility::toString ( Transposition::applyCipher (
+        Utility::toNumVector ( "attckpostponeduntiltwoam" ),
+        std::vector< int16_t > { 4, 3, 1, 2, 5, 6, 7 },
+        Utility::OpType::ENCRYPT ) )
+              << "\n";
+
+    std::cout << "b.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE' "
+                 "using double transposition with the key (3, 5, 1, 6, 2, 4)\n";
+
+    std::cout << Utility::toString ( Transposition::applyCipher (
+        Utility::toNumVector ( "AMRTMOEPEAEGRTFYTZTYXAWE" ),
+        std::vector< int16_t > { 3, 5, 1, 6, 2, 4 },
+        Utility::OpType::DECRYPT ) )
+              << "\n";
 }
+
 void printHill ( ) {
     /*
      * QUESTION 1
