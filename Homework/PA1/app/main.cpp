@@ -100,20 +100,27 @@ void printTransposition ( ) {
            "double transposition with the key (4, 3, 1, 2, 5, 6, "
            "7)\n";
 
-    std::cout << Utility::toString ( Transposition::applyCipher (
-        Utility::toNumVector ( "attckpostponeduntiltwoam" ),
-        std::vector< int16_t > { 4, 3, 1, 2, 5, 6, 7 },
-        Utility::OpType::ENCRYPT ) )
-              << "\n";
+    std::cout << Utility::toString ( Utility::CipherVector (
+        Utility::Matrix ( Utility::toNumVector ( "attackpostponeduntiltwoam" ),
+                          7 ),
+        Utility::OpType::DECRYPT ) );
 
-    std::cout << "b.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE' "
-                 "using double transposition with the key (3, 5, 1, 6, 2, 4)\n";
+    // std::cout << Utility::toString ( Transposition::applyCipher (
+    //     Utility::toNumVector ( "attackpostponeduntiltwoam" ),
+    //     std::vector< int16_t > { 4, 3, 1, 2, 5, 6, 7 },
+    //     Utility::OpType::ENCRYPT ) )
+    //           << "\n";
 
-    std::cout << Utility::toString ( Transposition::applyCipher (
-        Utility::toNumVector ( "AMRTMOEPEAEGRTFYTZTYXAWE" ),
-        std::vector< int16_t > { 3, 5, 1, 6, 2, 4 },
-        Utility::OpType::DECRYPT ) )
-              << "\n";
+    // std::cout << "b.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE'
+    // "
+    //              "using double transposition with the key (3, 5, 1, 6, 2,
+    //              4)\n";
+
+    // std::cout << Utility::toString ( Transposition::applyCipher (
+    //     Utility::toNumVector ( "AMRTMOEPEAEGRTFYTZTYXAWE" ),
+    //     std::vector< int16_t > { 3, 5, 1, 6, 2, 4 },
+    //     Utility::OpType::DECRYPT ) )
+    //           << "\n";
 }
 
 void printHill ( ) {

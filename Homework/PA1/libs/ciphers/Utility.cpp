@@ -1,14 +1,89 @@
 #include "include/ciphers/Utility.h"
 
+#include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <numeric>
 #include <ranges>
 namespace Utility {
+    /*
+     * MATRIX
+     */
+    Matrix::Matrix ( const size_t &size ) {
+        matrix.resize ( size, std::vector< int16_t > ( size, 24 ) );
+    }
+    Matrix::Matrix ( const std::vector< int16_t > &vec, const size_t &width ) {
+        size_t n = ( vec.size ( ) + width - 1 ) / width;
+
+        matrix.resize ( n, std::vector< int16_t > ( width, 24 ) );
+        for ( size_t i = 0; i < vec.size ( ); ++i ) {
+            size_t row = i / width;
+            size_t col = i % width;
+            matrix[ row ][ col ] = vec[ i ];
+        }
+    }
+
+    std::vector< int16_t > &Matrix::operator[] ( const size_t &index ) {
+        return matrix[ index ];
+    }
+    const std::vector< int16_t > &Matrix::operator[] (
+        const size_t &index ) const {
+        return matrix[ index ];
+    }
+
+    Matrix::Data::iterator Matrix::begin ( ) { return matrix.begin ( ); }
+    Matrix::Data::iterator Matrix::end ( ) { return matrix.end ( ); }
+
+    Matrix::Data::const_iterator Matrix::begin ( ) const {
+        return matrix.begin ( );
+    }
+    Matrix::Data::const_iterator Matrix::end ( ) const {
+        return matrix.end ( );
+    }
+
+    size_t Matrix::size ( ) const { return matrix.size ( ); }
+    /*
+     * CIPHERVECTOR
+     */
     CipherVector::CipherVector ( const std::vector< int16_t > &vec,
                                  const OpType &opType )
-        : m_vec ( vec )
-        , m_opType ( opType ) {}
+        : cipherVector ( vec )
+        , opType ( opType ) {}
+    CipherVector::CipherVector ( const Matrix &matrix, const OpType &opType )
+        : opType ( opType ) {
+        std::for_each ( matrix.begin ( ),
+                        matrix.end ( ),
+                        [ & ] ( const std::vector< int16_t > &row ) {
+                            cipherVector.insert ( cipherVector.end ( ),
+                                                  row.begin ( ),
+                                                  row.end ( ) );
+                        } );
+    }
 
+    int16_t &CipherVector::operator[] ( const size_t &index ) {
+        return cipherVector[ index ];
+    }
+    const int16_t &CipherVector::operator[] ( const size_t &index ) const {
+        return cipherVector[ index ];
+    }
+
+    CipherVector::Data::iterator CipherVector::begin ( ) {
+        return cipherVector.begin ( );
+    }
+    CipherVector::Data::iterator CipherVector::end ( ) {
+        return cipherVector.end ( );
+    }
+
+    CipherVector::Data::const_iterator CipherVector::begin ( ) const {
+        return cipherVector.begin ( );
+    }
+    CipherVector::Data::const_iterator CipherVector::end ( ) const {
+        return cipherVector.end ( );
+    }
+
+    /*
+     * UTILITY FUNCTIONS
+     */
     std::vector< int16_t > toNumVector ( const std::string &text ) {
         return std::accumulate (
             text.begin ( ),
@@ -22,11 +97,11 @@ namespace Utility {
     }
 
     std::string toString ( const CipherVector &vec ) {
-        switch ( vec.m_opType ) {
+        switch ( vec.opType ) {
             case OpType::ENCRYPT: {
                 return std::accumulate (
-                    vec.m_vec.begin ( ),
-                    vec.m_vec.end ( ),
+                    vec.begin ( ),
+                    vec.end ( ),
                     std::string { },
                     [] ( const std::string &acc, const int16_t &num ) {
                         return acc + char ( num + 'A' );
@@ -35,8 +110,8 @@ namespace Utility {
 
             case OpType::DECRYPT: {
                 return std::accumulate (
-                    vec.m_vec.begin ( ),
-                    vec.m_vec.end ( ),
+                    vec.begin ( ),
+                    vec.end ( ),
                     std::string { },
                     [] ( const std::string &acc, const int16_t &num ) {
                         return acc + char ( num + 'a' );
@@ -46,12 +121,11 @@ namespace Utility {
                 auto frequencyStrings
                     = std::views::iota ( 0, 26 )
                       | std::views::transform ( [ &vec ] ( const int &index ) {
-                            if ( vec.m_vec[ index ] > 0 ) {
+                            if ( vec[ index ] > 0 ) {
                                 return std::string (
                                            1,
                                            static_cast< char > ( 'a' + index ) )
-                                       + "->"
-                                       + std::to_string ( vec.m_vec[ index ] )
+                                       + "->" + std::to_string ( vec[ index ] )
                                        + "\n";
                             }
                             return std::string { };
