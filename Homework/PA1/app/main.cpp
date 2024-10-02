@@ -96,45 +96,48 @@ void printTransposition ( ) {
     std::cout
         << "2.) The following was encrypted using by row transposition method. "
            "Implement functions to perform encryption/decryption.\n\ta.) "
-           "Encrypt the plaintext 'attck postponed until two am' using "
+           "Encrypt the plaintext 'attack postponed until two am' using "
            "double transposition with the key (4, 3, 1, 2, 5, 6, "
            "7)\n";
 
-    std::cout << Utility::toString ( Utility::CipherVector (
-        Utility::Matrix ( Utility::toNumVector ( "attackpostponeduntiltwoam" ),
-                          7 ),
-        Utility::OpType::DECRYPT ) );
+    std::cout << Utility::toString ( Transposition::applyCipher (
+        Utility::toNumVector ( "attackpostponeduntiltwoam" ),
+        std::vector< int16_t > { 4, 3, 1, 2, 5, 6, 7 },
+        Utility::OpType::ENCRYPT ) )
+              << "\n";
 
-    // std::cout << Utility::toString ( Transposition::applyCipher (
-    //     Utility::toNumVector ( "attackpostponeduntiltwoam" ),
-    //     std::vector< int16_t > { 4, 3, 1, 2, 5, 6, 7 },
-    //     Utility::OpType::ENCRYPT ) )
-    //           << "\n";
+    std::cout << "b.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE'"
+                 "using double transposition with the key (3, 5, 1, 6, 2,"
+                 "4)\n";
 
-    // std::cout << "b.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE'
-    // "
-    //              "using double transposition with the key (3, 5, 1, 6, 2,
-    //              4)\n";
-
-    // std::cout << Utility::toString ( Transposition::applyCipher (
-    //     Utility::toNumVector ( "AMRTMOEPEAEGRTFYTZTYXAWE" ),
-    //     std::vector< int16_t > { 3, 5, 1, 6, 2, 4 },
-    //     Utility::OpType::DECRYPT ) )
-    //           << "\n";
+    std::cout << Utility::toString ( Transposition::applyCipher (
+        Utility::toNumVector ( "AMRTMOEPEAEGRTFYTZTYXAWE" ),
+        std::vector< int16_t > { 3, 5, 1, 6, 2, 4 },
+        Utility::OpType::DECRYPT ) )
+              << "\n";
 }
 
 void printHill ( ) {
     /*
      * QUESTION 1
      */
-
+    std::cout
+        << "Implement functions to perform encryption/decryption with 2x2 Hill "
+           "Cipher. The key should be an invertible matrix over the integers "
+           "mod 26.\n\ta.) Encrypt 'Meet me at the usual place at ten rather "
+           "than eight oclock' with K={{9,4},{5,7}}\n\tb.) Decrypt 'YIFZMA' "
+           "with K = {{9,13},{2,3}}\n";
     /*
      * QUESTION 2
      */
+    std::cout << "Implement a known plaintext attack on the hill cipher. "
+                 "Plaintext = 'how are you today' and ciphertext = "
+                 "'ZWESENIUSPLJVEU'. Deduce the key matrix with dimension 2.\n";
 }
-int main ( int argc, const char *argv[] ) {
+
+int main ( ) {
     printAffine ( );
     printTransposition ( );
-    printHill ( );
+    // printHill ( );
     return 0;
 }

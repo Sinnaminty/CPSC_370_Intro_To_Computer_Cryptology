@@ -10,12 +10,12 @@ namespace Utility {
      * MATRIX
      */
     Matrix::Matrix ( const size_t &size ) {
-        matrix.resize ( size, std::vector< int16_t > ( size, 24 ) );
+        matrix.resize ( size, std::vector< int16_t > ( size, 23 ) );
     }
     Matrix::Matrix ( const std::vector< int16_t > &vec, const size_t &width ) {
         size_t n = ( vec.size ( ) + width - 1 ) / width;
 
-        matrix.resize ( n, std::vector< int16_t > ( width, 24 ) );
+        matrix.resize ( n, std::vector< int16_t > ( width, 23 ) );
         for ( size_t i = 0; i < vec.size ( ); ++i ) {
             size_t row = i / width;
             size_t col = i % width;
