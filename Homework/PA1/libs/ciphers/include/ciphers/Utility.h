@@ -33,11 +33,17 @@ namespace Utility {
 
         /**
          * @brief Constructs a matrix from a flat vector, with the specified row
-         * width. Fills any left over spaces with the value 24 (x).
+         * width. Fills any left over spaces with the value 23 (x).
          * @param vec The flat vector of int16_t values.
          * @param width The width of each row in the matrix.
          */
         Matrix ( const std::vector< int16_t > &vec, const size_t &width );
+
+        /**
+         * @brief Constructs a Matrix type from a vector of vectors.
+         * @param mat The vector of vectors.
+         */
+        Matrix ( const std::vector< std::vector< int16_t > > &mat );
 
         /**
          * @brief Accesses a specific row of the matrix.

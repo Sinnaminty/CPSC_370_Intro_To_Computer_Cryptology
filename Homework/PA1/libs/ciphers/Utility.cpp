@@ -22,6 +22,9 @@ namespace Utility {
             matrix[ row ][ col ] = vec[ i ];
         }
     }
+    Matrix::Matrix ( const std::vector< std::vector< int16_t > > &mat ) {
+        matrix = mat;
+    }
 
     std::vector< int16_t > &Matrix::operator[] ( const size_t &index ) {
         return matrix[ index ];
