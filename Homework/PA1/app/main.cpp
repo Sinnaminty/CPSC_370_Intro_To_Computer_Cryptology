@@ -107,7 +107,7 @@ void printTransposition ( ) {
               << "\n";
 
     std::cout << "b.) Decrypt the ciphertext 'AMRT MOEP EAEG RTFY TZTY XAWE'"
-                 "using double transposition with the key (3, 5, 1, 6, 2,"
+                 "using double transposition with the key (3, 5, 1, 6, 2, "
                  "4)\n";
 
     std::cout << Utility::toString ( Transposition::applyCipher (
