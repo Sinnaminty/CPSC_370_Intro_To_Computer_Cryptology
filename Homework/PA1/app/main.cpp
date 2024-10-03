@@ -1,4 +1,5 @@
 #include <ciphers/Affine.h>
+#include <ciphers/Hill.h>
 #include <ciphers/Shift.h>
 #include <ciphers/Transposition.h>
 #include <ciphers/Utility.h>
@@ -126,7 +127,8 @@ void printHill ( ) {
      * QUESTION 1
      */
     std::cout
-        << "Implement functions to perform encryption/decryption with 2x2 Hill "
+        << "1.) Implement functions to perform encryption/decryption with 2x2 "
+           "Hill "
            "Cipher. The key should be an invertible matrix over the integers "
            "mod 26.\n";
 
@@ -151,7 +153,7 @@ void printHill ( ) {
     /*
      * QUESTION 2
      */
-    std::cout << "Implement a known plaintext attack on the hill cipher. "
+    std::cout << "2.) Implement a known plaintext attack on the hill cipher. "
                  "Plaintext = 'how are you today' and ciphertext = "
                  "'ZWESENIUSPLJVEU'. Deduce the key matrix with dimension 2.\n";
 }

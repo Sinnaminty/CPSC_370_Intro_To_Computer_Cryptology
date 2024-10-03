@@ -5,6 +5,7 @@ add_library(${PROJECT_NAME}
   Utility.cpp
   Shift.cpp
   Transposition.cpp
+  Hill.cpp
 )
 
 add_library(libs::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
