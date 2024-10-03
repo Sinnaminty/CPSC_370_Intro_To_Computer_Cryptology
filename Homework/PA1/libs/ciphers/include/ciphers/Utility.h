@@ -26,6 +26,12 @@ namespace Utility {
         Data matrix; /**< The underlying 2D vector holding the matrix data */
 
         /**
+         * @brief Constructs an empty matrix of the given size n
+         * @param n The size of this matrix.
+         */
+        Matrix ( const size_t &n );
+
+        /**
          * @brief Constructs an empty matrix of the given height and width (n x
          * m).
          * @param height The height of the matrix (num of rows).
