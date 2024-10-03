@@ -1,16 +1,18 @@
 #include "include/ciphers/Utility.h"
 
 #include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <cstdint>
 #include <numeric>
 #include <ranges>
+
 namespace Utility {
     /*
      * MATRIX
      */
-    Matrix::Matrix ( const size_t &size ) {
-        matrix.resize ( size, std::vector< int16_t > ( size, 23 ) );
+    Matrix::Matrix ( const size_t &height, const size_t &width ) {
+        matrix.resize ( height, std::vector< int16_t > ( width, 0 ) );
     }
     Matrix::Matrix ( const std::vector< int16_t > &vec, const size_t &width ) {
         size_t n = ( vec.size ( ) + width - 1 ) / width;
@@ -44,7 +46,13 @@ namespace Utility {
         return matrix.end ( );
     }
 
-    size_t Matrix::size ( ) const { return matrix.size ( ); }
+    size_t Matrix::height ( ) const { return matrix.size ( ); }
+    size_t Matrix::width ( ) const { return matrix[ 0 ].size ( ); }
+    size_t Matrix::n ( ) const {
+        assert ( height ( ) == width ( ) && "Matrix is not square!" );
+        return height ( );
+    }
+
     /*
      * CIPHERVECTOR
      */
@@ -144,4 +152,40 @@ namespace Utility {
 
     int16_t posMod ( const int16_t &num ) { return ( num % 26 + 26 ) % 26; }
 
+    int16_t posModInverse ( const int16_t &num ) {}
+
+    Utility::Matrix mulMatrix ( const Utility::Matrix &a,
+                                const Utility::Matrix &b ) {
+        assert ( a.height ( ) == b.width ( )
+                 && "Matricies cannot be multiplied!" );
+        Utility::Matrix retMat ( a.height ( ), b.width ( ) );
+        for ( size_t i = 0; i < a.height ( ); i++ ) {
+            for ( size_t j = 0; j < b.width ( ); j++ ) {
+                for ( size_t k = 0; k < b.height ( ); k++ ) {
+                    retMat[ i ][ j ] += a[ i ][ k ] * b[ k ][ j ];
+                }
+            }
+        }
+        return ( posModMatrix ( retMat ) );
+    }
+
+    Utility::Matrix posModMatrix ( const Utility::Matrix &mat ) {
+        Utility::Matrix retMat ( mat );
+        for ( std::vector< int16_t > &row : retMat ) {
+            for ( int16_t &num : row ) { num = Utility::posMod ( num ); }
+        }
+        return retMat;
+    }
+
+    int16_t determinant ( const Utility::Matrix &mat ) {}
+
+    Utility::Matrix getMinorMatrix ( const Utility::Matrix &mat,
+                                     const size_t &row,
+                                     const size_t &col ) {}
+
+    Utility::Matrix cofactorMatrix ( const Utility::Matrix &mat ) {}
+
+    Utility::Matrix transposeMatrix ( const Utility::Matrix &mat ) {}
+
+    Utility::Matrix inverseMatrix ( const Utility::Matrix &mat ) {}
 }  // namespace Utility

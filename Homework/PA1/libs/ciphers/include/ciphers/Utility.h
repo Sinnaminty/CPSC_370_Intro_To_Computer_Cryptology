@@ -26,10 +26,12 @@ namespace Utility {
         Data matrix; /**< The underlying 2D vector holding the matrix data */
 
         /**
-         * @brief Constructs an empty square matrix of the given size.
-         * @param size The size of the matrix (n x n).
+         * @brief Constructs an empty matrix of the given height and width (n x
+         * m).
+         * @param height The height of the matrix (num of rows).
+         * @param width The width of the matrix (num of cols).
          */
-        Matrix ( const size_t &size );
+        Matrix ( const size_t &height, const size_t &width );
 
         /**
          * @brief Constructs a matrix from a flat vector, with the specified row
@@ -84,10 +86,24 @@ namespace Utility {
         Data::const_iterator end ( ) const;
 
         /**
-         * @brief Returns the size of the matrix (number of rows).
+         * @brief Returns the height of the matrix (number of rows).
          * @return The number of rows in the matrix.
          */
-        size_t size ( ) const;
+        size_t height ( ) const;
+
+        /**
+         * @brief Returns the width of the matrix (number of columns).
+         * @return The number of columns in the matrix.
+         */
+        size_t width ( ) const;
+
+        /**
+         * @brief Returns the dimension of this matrix.
+         * @note Warning, This will stop execution if this matrix is
+         * not square!
+         * @return The dimension of this matrix.
+         */
+        size_t n ( ) const;
     };
 
     /**
@@ -182,6 +198,47 @@ namespace Utility {
      */
     int16_t posMod ( const int16_t &num );
 
+    /**
+     * @brief Finds the modular inverse of a number.
+     * @param num The integer to find the modular inverse of.
+     * @return The modular inverse.
+     */
+    int16_t posModInverse ( const int16_t &num );
+
+    /**
+     * @brief Multiplies two matricies.
+     * @note Warning, execution will stop if the two matricies cannot be
+     * multiplied!
+     * @param a First matrix to multiply.
+     * @param b Second matrix to multiply.
+     * @return Reulting Matrix from multiplication.
+     */
+    Utility::Matrix mulMatrix ( const Utility::Matrix &a,
+                                const Utility::Matrix &b );
+
+    /**
+     * @brief Performs a positive modulo operation on a matrix.
+     * @param mat The matrix to perform modulo on.
+     * @return The matrix with all numbers applied the modulo operation.
+     */
+    Utility::Matrix posModMatrix ( const Utility::Matrix &mat );
+
+    /**
+     * @brief Calculates the determinant of an nxn matrix.
+     * @param mat The matrix to calulate the determinant of.
+     * @return The determinant of the matrix.
+     */
+    int16_t determinant ( const Utility::Matrix &mat );
+
+    Utility::Matrix getMinorMatrix ( const Utility::Matrix &mat,
+                                     const size_t &row,
+                                     const size_t &col );
+
+    Utility::Matrix cofactorMatrix ( const Utility::Matrix &mat );
+
+    Utility::Matrix transposeMatrix ( const Utility::Matrix &mat );
+
+    Utility::Matrix inverseMatrix ( const Utility::Matrix &mat );
 };  // namespace Utility
 
 #endif  // UTILITY_H
