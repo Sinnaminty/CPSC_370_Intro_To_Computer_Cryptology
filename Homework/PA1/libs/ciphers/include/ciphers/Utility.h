@@ -191,6 +191,15 @@ namespace Utility {
     std::vector< int16_t > toNumVector ( const std::string &text );
 
     /**
+     * @brief Converts a matrix to a vector of int16_t values, representing the
+     * positions of characters.
+     * @param mat The input matrix.
+     * @return A vector of int16_t values corresponding to the positions of
+     * characters.
+     */
+    std::vector< int16_t > toNumVector ( const Matrix &mat );
+
+    /**
      * @brief Converts a CipherVector back into a string representation.
      * @param vec The CipherVector to convert.
      * @return A string representation of the CipherVector.
