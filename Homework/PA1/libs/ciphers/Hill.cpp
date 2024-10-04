@@ -1,5 +1,6 @@
 #include "include/ciphers/Hill.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <vector>
 
@@ -44,9 +45,6 @@ namespace Hill {
         return matrices;
     }
 
-    Utility::Matrix func ( const Utility::Matrix &mat,
-                           const Utility::Matrix &key ) {}
-
     Utility::CipherVector applyCipher ( const std::vector< int16_t > &vec,
                                         const Utility::Matrix &key,
                                         const Utility::OpType &opType ) {
@@ -54,7 +52,19 @@ namespace Hill {
             = toMatrixVector ( vec, key.n ( ) );
         std::vector< Utility::Matrix > cipherMatrixVector;
         for ( const Utility::Matrix &mat : matrixVector ) {
-            cipherMatrixVector.push_back ( func ( mat, key ) );
+            cipherMatrixVector.push_back (
+                Utility::posModMatrix ( Utility::mulMatrix ( mat, key ) ) );
         }
+        std::vector< int16_t > returnVec;
+        for ( const Utility::Matrix &mat : matrixVector ) {
+            std::for_each ( mat.begin ( ),
+                            mat.end ( ),
+                            [ & ] ( const std::vector< int16_t > &row ) {
+                                returnVec.insert ( returnVec.end ( ),
+                                                   row.begin ( ),
+                                                   row.end ( ) );
+                            } );
+        }
+        return Utility::CipherVector ( returnVec, opType );
     }
 }  // namespace Hill
