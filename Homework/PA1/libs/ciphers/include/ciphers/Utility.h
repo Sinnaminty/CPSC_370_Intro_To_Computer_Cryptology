@@ -207,6 +207,13 @@ namespace Utility {
     std::string toString ( const CipherVector &vec );
 
     /**
+     * @brief Converts a matrix back into a string representation.
+     * @param mat The matrix to convert.
+     * @return A string representation of the matrix.
+     */
+    std::string toString ( const Matrix &mat );
+
+    /**
      * @brief Performs a positive modulo operation on an integer.
      * @param num The integer to perform modulo on.
      * @return The positive result of the modulo operation.

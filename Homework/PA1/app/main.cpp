@@ -156,6 +156,11 @@ void printHill ( ) {
     std::cout << "2.) Implement a known plaintext attack on the hill cipher. "
                  "Plaintext = 'how are you today' and ciphertext = "
                  "'ZWESENIUSPLJVEU'. Deduce the key matrix with dimension 2.\n";
+    std::cout << "Unable to implement, I quit!\n";
+    // std::cout << Utility::toString ( Hill::findKey (
+    //     Utility::toNumVector ( "howareyoutoday" ),
+    //     Utility::toNumVector ( "ZWESENIUSPLJVEU" ),
+    //     2 ) ) << "\n";
 }
 
 int main ( ) {

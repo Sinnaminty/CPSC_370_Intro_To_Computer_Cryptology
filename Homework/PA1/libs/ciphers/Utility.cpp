@@ -158,6 +158,15 @@ namespace Utility {
         }
     }
 
+    std::string toString ( const Matrix &mat ) {
+        std::string retString;
+        for ( const std::vector< int16_t > &row : mat ) {
+            for ( const int16_t &num : row ) {
+                retString += std::to_string ( num ) + ", ";
+            }
+        }
+        return retString;
+    }
     int16_t posMod ( const int16_t &num ) { return ( num % 26 + 26 ) % 26; }
 
     int16_t posModInverse ( const int16_t &num ) {
@@ -171,11 +180,11 @@ namespace Utility {
 
     Utility::Matrix mulMatrix ( const Utility::Matrix &a,
                                 const Utility::Matrix &b ) {
-        if ( a.height ( ) != b.width ( ) ) {
+        if ( a.width ( ) != b.height ( ) ) {
             throw std::runtime_error (
                 "Matricies cannot be multiplied! a.height: "
-                + std::to_string ( a.height ( ) )
-                + " b.width: " + std::to_string ( b.width ( ) ) );
+                + std::to_string ( a.width ( ) )
+                + " b.width: " + std::to_string ( b.height ( ) ) );
         }
 
         Utility::Matrix retMat ( a.height ( ), b.width ( ) );
