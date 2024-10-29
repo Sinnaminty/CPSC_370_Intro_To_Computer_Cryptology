@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.5)
+# PROJECT DESCRIPTION AND META INFO
+
+set(PROJECT_NAME
+  "S-AES"
+)
+
+set(PROJECT_LANGUAGES "CXX")
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD_REQUIRED 20)
+set(CMAKE_BUILD_TYPE Debug)
+# DECLARE PROJECT
+
+project(${PROJECT_NAME})
+
+add_subdirectory(libs)
+add_subdirectory(app)
