@@ -2,6 +2,7 @@ project(cipher)
 
 add_library(${PROJECT_NAME}
   Utility.cpp
+  SAES.cpp
 )
 
 add_library(libs::${PROJECT_NAME} ALIAS ${PROJECT_NAME})

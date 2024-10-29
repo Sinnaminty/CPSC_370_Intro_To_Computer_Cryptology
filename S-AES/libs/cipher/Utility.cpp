@@ -4,7 +4,6 @@
 #include <cmath>
 #include <cstdint>
 #include <numeric>
-#include <ranges>
 #include <stdexcept>
 #include <string>
 
@@ -135,24 +134,6 @@ namespace Utility {
                     [] ( const std::string &acc, const int16_t &num ) {
                         return acc + char ( num + 'a' );
                     } );
-            }
-            case OpType::FREQUENCY: {
-                auto frequencyStrings
-                    = std::views::iota ( 0, 26 )
-                      | std::views::transform ( [ &vec ] ( const int &index ) {
-                            if ( vec[ index ] > 0 ) {
-                                return std::string (
-                                           1,
-                                           static_cast< char > ( 'a' + index ) )
-                                       + "->" + std::to_string ( vec[ index ] )
-                                       + "\n";
-                            }
-                            return std::string { };
-                        } );
-
-                return std::accumulate ( frequencyStrings.begin ( ),
-                                         frequencyStrings.end ( ),
-                                         std::string { } );
             }
             default: return std::string { };
         }

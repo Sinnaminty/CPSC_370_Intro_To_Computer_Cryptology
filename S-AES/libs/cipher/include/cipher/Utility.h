@@ -11,9 +11,8 @@ namespace Utility {
      * @brief Represents the type of operation to be performed.
      */
     enum class OpType {
-        ENCRYPT,  /**< Encryption operation */
-        DECRYPT,  /**< Decryption operation */
-        FREQUENCY /**< Frequency analysis operation */
+        ENCRYPT, /**< Encryption operation */
+        DECRYPT  /**< Decryption operation */
     };
 
     /**
