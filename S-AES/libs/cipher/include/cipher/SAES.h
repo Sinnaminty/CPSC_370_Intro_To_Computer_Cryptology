@@ -1,17 +1,23 @@
 #ifndef SAES_H
 #define SAES_H
 
-#include "Utility.h"
+#include "U.h"
 
 namespace SAES {
-    Utility::CipherVector applyCipher ( const std::vector< int16_t > &p,
-                                        const std::vector< int16_t > &k );
+    U::Matrix applyCipher ( const U::Matrix &p,
+                            const U::Matrix &k,
+                            const U::Op &op );
 
-    Utility::Matrix addRoundKey ( const Utility::Matrix &p,
-                                  const Utility::Matrix &k );
-    Utility::Matrix subNibbles ( const Utility::Matrix &s );
-    Utility::Matrix shiftRows ( const Utility::Matrix &s );
-    Utility::Matrix mixColumns ( const Utility::Matrix &s );
+    void addRoundKey ( U::Matrix &s, const U::Matrix &k );
+
+    void subNibbles ( U::Matrix &s );
+
+    void shiftRows ( U::Matrix &s );
+
+    void mixColumns ( U::Matrix &s );
+
+    U::Matrix computeKey ( const U::Matrix &k, const uint16_t &round );
+
 };  // namespace SAES
 
 #endif  // SAES_H

@@ -1,7 +1,7 @@
 project(cipher)
 
 add_library(${PROJECT_NAME}
-  Utility.cpp
+  U.cpp
   SAES.cpp
 )
 
