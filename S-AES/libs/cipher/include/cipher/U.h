@@ -29,6 +29,13 @@ namespace U {
          */
         Nyb ( const uint8_t &value = 0 );
 
+        /**
+         * @brief Constructs an empty Nyb from a String.
+         * @param value The value to set this Nyb to. Will throw an exception if
+         * the string is invalid.
+         */
+        Nyb ( const std::string &s );
+
         // Bit wise Operators
         Nyb operator& ( const Nyb &other ) const;
         Nyb operator| ( const Nyb &other ) const;
@@ -47,15 +54,104 @@ namespace U {
         std::string toString ( ) const;
     };
 
-    Nyb nybGFMultiply ( const Nyb &n1, const Nyb &n2 );
+    struct Word {
+        using Data = std::array< Nyb, 2 >;
+        Data word;
+
+        /**
+         * @brief Constructs an empty Word from a uint8_t.
+         * @param value The value to set this Word to. Optional.
+         */
+        Word ( const uint8_t &value = 0 );
+
+        /**
+         * @brief Constructs an empty Word from two Nybs.
+         * @param value The value to set this Word to.
+         */
+        Word ( const Nyb &n0, const Nyb &n1 );
+
+        /**
+         * @brief Constructs an empty Word from a string.
+         * @param value The value to set this Word to. Will throw an exception
+         * if string isn't valid.
+         */
+        Word ( const std::string &s );
+
+        // Bit wise Operators
+        Word operator& ( const Word &other ) const;
+        Word operator| ( const Word &other ) const;
+        Word operator~( ) const;
+        Word operator^ ( const Word &other ) const;
+
+        Word &operator&= ( const Word &other );
+        Word &operator|= ( const Word &other );
+        Word &operator^= ( const Word &other );
+
+        // Shift Operators
+        Word &operator<<= ( const int &shift );
+        Word &operator>>= ( const int &shift );
+
+        // Other operators
+
+        /**
+         * @brief Accesses a specific row of the Word.
+         * @param index The row index.
+         * @return A reference to the row vector.
+         */
+        Nyb &operator[] ( const size_t &index );
+
+        /**
+         * @brief Accesses a specific row of the Word (const version).
+         * @param index The row index.
+         * @return A const reference to the row vector.
+         */
+        const Nyb &operator[] ( const size_t &index ) const;
+
+        // Iterators
+
+        /**
+         * @brief Returns an iterator to the beginning of the Word.
+         * @return An iterator to the first row of the Word.
+         */
+        Data::iterator begin ( );
+
+        /**
+         * @brief Returns a const iterator to the beginning of the Word.
+         * @return A const iterator to the first row of the Word.
+         */
+        Data::const_iterator begin ( ) const;
+
+        /**
+         * @brief Returns an iterator to the end of the Word.
+         * @return An iterator to the row past the last row of the Word.
+         */
+        Data::iterator end ( );
+
+        /**
+         * @brief Returns a const iterator to the end of the Word.
+         * @return A const iterator to the row past the last row of the Word.
+         */
+        Data::const_iterator end ( ) const;
+
+        uint8_t toUInt ( ) const;
+
+        std::string toString ( ) const;
+    };
 
     /**
      * @struct Matrix
      * @brief A Matrix of 4 Nybs.
      */
     struct Matrix {
-        using Data = std::array< std::array< Nyb, 2 >, 2 >;
+        using Data = std::array< Word, 2 >;
         Data matrix;
+
+        /**
+         * @brief Constructor for a 2x2 matrix.
+         * @param w0 The Word on the left of this Matrix.
+         * @param w1 The Word on the right of this Matrix.
+         */
+        Matrix ( const Word &n0, const Word &n1 );
 
         /**
          * @brief Constructor for a 2x2 matrix.
@@ -93,14 +189,14 @@ namespace U {
          * @param index The row index.
          * @return A reference to the row vector.
          */
-        std::array< Nyb, 2 > &operator[] ( const size_t &index );
+        Word &operator[] ( const size_t &index );
 
         /**
          * @brief Accesses a specific row of the matrix (const version).
          * @param index The row index.
          * @return A const reference to the row vector.
          */
-        const std::array< Nyb, 2 > &operator[] ( const size_t &index ) const;
+        const Word &operator[] ( const size_t &index ) const;
 
         // Iterators
 
@@ -135,7 +231,8 @@ namespace U {
         std::string toString ( ) const;
     };
 
-    Matrix matrixGFMultiply ( const Matrix &m1, const Matrix &m2 );
+    Nyb nybGFMultiply ( const Nyb &n0, const Nyb &n1 );
+    Matrix matrixGFMultiply ( const Matrix &m0, const Matrix &m1 );
 };  // namespace U
 
 #endif  // U_H

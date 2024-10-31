@@ -8,16 +8,21 @@ namespace SAES {
                             const U::Matrix &k,
                             const U::Op &op );
 
-    void addRoundKey ( U::Matrix &s, const U::Matrix &k );
+    U::Matrix addRoundKey ( const U::Matrix &s, const U::Matrix &k );
 
-    void subNibbles ( U::Matrix &s );
+    U::Matrix subMatrix ( const U::Matrix &s );
 
-    void shiftRows ( U::Matrix &s );
+    U::Matrix shiftRows ( const U::Matrix &s );
 
-    void mixColumns ( U::Matrix &s );
+    U::Matrix mixColumns ( const U::Matrix &s );
 
     U::Matrix computeKey ( const U::Matrix &k, const uint16_t &round );
 
+    U::Word subWord ( const U::Word &w );
+
+    U::Word rotateWord ( const U::Word &w );
+
+    U::Nyb subNyb ( const U::Nyb &n );
 };  // namespace SAES
 
 #endif  // SAES_H
