@@ -24,10 +24,15 @@ namespace U {
         Data nyb;
 
         /**
-         * @brief Constructs an empty Nyb.
-         * @param value The value to set this Nyb to. Optional.
+         * @brief Constructs a Nyb filled with zeros.
          */
-        Nyb ( const uint8_t &value = 0 );
+        Nyb ( );
+
+        /**
+         * @brief Constructs a Nyb.
+         * @param value The value to set this Nyb to.
+         */
+        Nyb ( const uint8_t &value );
 
         /**
          * @brief Constructs an empty Nyb from a String.
@@ -50,6 +55,9 @@ namespace U {
         Nyb &operator<<= ( const int &shift );
         Nyb &operator>>= ( const int &shift );
 
+        // Other Operators
+        Nyb operator* ( const Nyb &other ) const;
+
         uint8_t toUInt ( ) const;
         std::string toString ( ) const;
     };
@@ -59,10 +67,15 @@ namespace U {
         Data word;
 
         /**
-         * @brief Constructs an empty Word from a uint8_t.
-         * @param value The value to set this Word to. Optional.
+         * @brief Constructs an empty Word filled with zeros.
          */
-        Word ( const uint8_t &value = 0 );
+        Word ( );
+
+        /**
+         * @brief Constructs an Word from a uint8_t.
+         * @param value The value to set this Word to.
+         */
+        Word ( const uint8_t &value );
 
         /**
          * @brief Constructs an empty Word from two Nybs.
@@ -147,11 +160,17 @@ namespace U {
         Data matrix;
 
         /**
+         * @brief Constructor for a 2x2 matrix. Creates an empty Matrix filled
+         * with zeros.
+         */
+        Matrix ( );
+
+        /**
          * @brief Constructor for a 2x2 matrix.
          * @param w0 The Word on the left of this Matrix.
          * @param w1 The Word on the right of this Matrix.
          */
-        Matrix ( const Word &n0, const Word &n1 );
+        Matrix ( const Word &w0, const Word &w1 );
 
         /**
          * @brief Constructor for a 2x2 matrix.
@@ -183,6 +202,8 @@ namespace U {
         Matrix &operator^= ( const Matrix &other );
 
         // Other operators
+
+        Matrix operator* ( const Matrix &other ) const;
 
         /**
          * @brief Accesses a specific row of the matrix.
@@ -231,8 +252,6 @@ namespace U {
         std::string toString ( ) const;
     };
 
-    Nyb nybGFMultiply ( const Nyb &n0, const Nyb &n1 );
-    Matrix matrixGFMultiply ( const Matrix &m0, const Matrix &m1 );
 };  // namespace U
 
 #endif  // U_H

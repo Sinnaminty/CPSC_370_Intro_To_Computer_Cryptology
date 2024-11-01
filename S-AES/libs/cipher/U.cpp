@@ -1,4 +1,4 @@
-#include "include/cipher/U.h"
+#include "cipher/U.h"
 
 #include <cstdint>
 #include <sstream>
@@ -8,6 +8,9 @@ namespace U {
     ///////
     /// NYB
     ///////
+
+    Nyb::Nyb ( )
+        : nyb ( 0 ) {}
 
     Nyb::Nyb ( const uint8_t &value )
         : nyb ( value & 0x0F ) {}
@@ -58,6 +61,26 @@ namespace U {
         return *this;
     }
 
+    Nyb Nyb::operator* ( const Nyb &other ) const {
+        uint8_t a = this->toUInt ( );
+        uint8_t b = other.toUInt ( );
+        uint8_t p = 0x00;
+        const uint8_t m = 0x13;
+
+        for ( size_t i = 0; i < 4; i++ ) {
+            // If the LSB of b is 1, add a to p
+            if ( b & 0x01 ) p ^= a;
+            // If the MSB of a is 1, a = shift a + mod
+            if ( a & 0x08 ) {
+                a = ( a << 1 ) ^ m;
+            } else { /** else just do the shift */
+                a <<= 1;
+            }
+            b >>= 1;
+        }
+        return Nyb ( p );
+    }
+
     uint8_t Nyb::toUInt ( ) const {
         return static_cast< uint8_t > ( this->nyb.to_ulong ( ) );
     }
@@ -70,6 +93,11 @@ namespace U {
     ////////
     /// WORD
     ////////
+
+    Word::Word ( ) {
+        word[ 0 ] = Nyb ( );
+        word[ 1 ] = Nyb ( );
+    }
 
     Word::Word ( const uint8_t &value ) {
         word[ 0 ] = value & 0xF0;
@@ -180,6 +208,11 @@ namespace U {
     /// MATRIX
     ////////////////
 
+    Matrix::Matrix ( ) {
+        matrix[ 0 ] = Word ( );
+        matrix[ 1 ] = Word ( );
+    }
+
     Matrix::Matrix ( const Word &w0, const Word &w1 ) {
         matrix[ 0 ] = w0;
         matrix[ 1 ] = w1;
@@ -190,8 +223,8 @@ namespace U {
                      const Nyb &n01,
                      const Nyb &n11 ) {
         matrix[ 0 ][ 0 ] = n00;
-        matrix[ 1 ][ 0 ] = n10;
-        matrix[ 0 ][ 1 ] = n01;
+        matrix[ 0 ][ 1 ] = n10;
+        matrix[ 1 ][ 0 ] = n01;
         matrix[ 1 ][ 1 ] = n11;
     }
 
@@ -250,6 +283,28 @@ namespace U {
     // OTHER OPERATORS
     //////////////////
 
+    Matrix Matrix::operator* ( const Matrix &other ) const {
+        // n00 = (a00)(b00)^(a01)(b10)
+        const Nyb n00 = ( ( this->matrix[ 0 ][ 0 ] * other[ 0 ][ 0 ] )
+                          ^ ( this->matrix[ 1 ][ 0 ] * other[ 0 ][ 1 ] ) );
+
+        // n10 = (a10)(b00)^(a11)(b10)
+        const Nyb n10 = ( ( this->matrix[ 0 ][ 1 ] * other[ 0 ][ 0 ] )
+                          ^ ( this->matrix[ 1 ][ 1 ] * other[ 0 ][ 1 ] ) );
+
+        // n01 = (a00)(b01)^(a01)(b11)
+        const Nyb n01 = ( ( this->matrix[ 0 ][ 0 ] * other[ 1 ][ 0 ] )
+                          ^ ( this->matrix[ 1 ][ 0 ] * other[ 1 ][ 1 ] ) );
+
+        // n11 = (a10)(b01)^(a11)(b11)
+        const Nyb n11 = ( ( this->matrix[ 0 ][ 1 ] * other[ 1 ][ 0 ] )
+                          ^ ( this->matrix[ 1 ][ 1 ] * other[ 1 ][ 1 ] ) );
+
+        const Word w0 ( n00, n10 );
+        const Word w1 ( n01, n11 );
+        return Matrix ( w0, w1 );
+    }
+
     Word &Matrix::operator[] ( const size_t &index ) { return matrix[ index ]; }
 
     const Word &Matrix::operator[] ( const size_t &index ) const {
@@ -271,43 +326,6 @@ namespace U {
         std::stringstream ss;
         ss << this->matrix[ 0 ].toString ( ) << this->matrix[ 1 ].toString ( );
         return ss.str ( );
-    }
-
-    Nyb nybGFMultiply ( const Nyb &n1, const Nyb &n2 ) {
-        uint8_t a = n1.toUInt ( );
-        uint8_t b = n2.toUInt ( );
-        uint8_t p = 0x00;
-        const uint8_t m = 0x13;
-
-        for ( size_t i = 0; i < 4; i++ ) {
-            // If the LSB of b is 1, add a to p
-            if ( b & 0x01 ) p ^= a;
-            // If the MSB of a is 1, a = shift a + mod
-            if ( a & 0x08 ) {
-                a = ( a << 1 ) ^ m;
-            } else { /** else just do the shift */
-                a <<= 1;
-            }
-            b >>= 1;
-        }
-
-        return Nyb ( p );
-    }
-
-    Matrix matrixGFMultiply ( const Matrix &m1, const Matrix &m2 ) {
-        Nyb n00 = nybGFMultiply ( m1[ 0 ][ 0 ], m2[ 0 ][ 0 ] )
-                  ^ nybGFMultiply ( m1[ 0 ][ 1 ], m2[ 1 ][ 0 ] );
-
-        Nyb n10 = nybGFMultiply ( m1[ 1 ][ 0 ], m2[ 0 ][ 0 ] )
-                  ^ nybGFMultiply ( m1[ 1 ][ 1 ], m2[ 1 ][ 0 ] );
-
-        Nyb n01 = nybGFMultiply ( m1[ 0 ][ 0 ], m2[ 0 ][ 1 ] )
-                  ^ nybGFMultiply ( m1[ 0 ][ 1 ], m2[ 1 ][ 1 ] );
-
-        Nyb n11 = nybGFMultiply ( m1[ 1 ][ 0 ], m2[ 0 ][ 1 ] )
-                  ^ nybGFMultiply ( m1[ 1 ][ 1 ], m2[ 1 ][ 1 ] );
-
-        return Matrix ( n00, n10, n01, n11 );
     }
 
 }  // namespace U

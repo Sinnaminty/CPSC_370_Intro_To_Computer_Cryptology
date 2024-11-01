@@ -4,6 +4,8 @@
 #include "U.h"
 
 namespace SAES {
+    void debug ( );
+    void keyGenDebug ( );
     U::Matrix applyCipher ( const U::Matrix &p,
                             const U::Matrix &k,
                             const U::Op &op );
