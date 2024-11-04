@@ -61,6 +61,10 @@ namespace U {
         return *this;
     }
 
+    //////////////////
+    // OTHER OPERATORS
+    //////////////////
+
     Nyb Nyb::operator* ( const Nyb &other ) const {
         uint8_t a = this->toUInt ( );
         uint8_t b = other.toUInt ( );
@@ -79,6 +83,10 @@ namespace U {
             b >>= 1;
         }
         return Nyb ( p );
+    }
+
+    bool Nyb::operator== ( const Nyb &other ) const {
+        return this->nyb == other.nyb ? 1 : 0;
     }
 
     uint8_t Nyb::toUInt ( ) const {
@@ -179,6 +187,10 @@ namespace U {
     //////////////////
     // OTHER OPERATORS
     //////////////////
+
+    bool Word::operator== ( const Word &other ) const {
+        return this->word == other.word ? 1 : 0;
+    }
 
     Nyb &Word::operator[] ( const size_t &index ) { return word[ index ]; }
 
@@ -303,6 +315,10 @@ namespace U {
         const Word w0 ( n00, n10 );
         const Word w1 ( n01, n11 );
         return Matrix ( w0, w1 );
+    }
+
+    bool Matrix::operator== ( const Matrix &other ) const {
+        return this->matrix == other.matrix ? 1 : 0;
     }
 
     Word &Matrix::operator[] ( const size_t &index ) { return matrix[ index ]; }

@@ -57,7 +57,9 @@ namespace U {
 
         // Other Operators
         Nyb operator* ( const Nyb &other ) const;
+        bool operator== ( const Nyb &other ) const;
 
+        // Struct Functions
         uint8_t toUInt ( ) const;
         std::string toString ( ) const;
     };
@@ -105,6 +107,8 @@ namespace U {
         Word &operator>>= ( const int &shift );
 
         // Other operators
+
+        bool operator== ( const Word &other ) const;
 
         /**
          * @brief Accesses a specific row of the Word.
@@ -204,6 +208,8 @@ namespace U {
         // Other operators
 
         Matrix operator* ( const Matrix &other ) const;
+
+        bool operator== ( const Matrix &other ) const;
 
         /**
          * @brief Accesses a specific row of the matrix.

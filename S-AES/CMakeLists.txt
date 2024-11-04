@@ -8,11 +8,12 @@ set(PROJECT_NAME
 set(PROJECT_LANGUAGES "CXX")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_STANDARD_REQUIRED 20)
-set(CMAKE_BUILD_TYPE Debug)
+
 # DECLARE PROJECT
 
 project(${PROJECT_NAME})
+
+include(CTest)
 
 add_subdirectory(libs)
 add_subdirectory(app)

@@ -19,3 +19,7 @@ target_compile_features(${PROJECT_NAME}
 PRIVATE
   cxx_std_20
 )
+
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
