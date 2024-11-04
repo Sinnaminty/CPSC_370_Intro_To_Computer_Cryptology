@@ -9,4 +9,5 @@ PRIVATE
   libs::cipher
 )
 
-add_test(cipher_tests ${PROJECT_NAME})
+add_test(NAME Encrypt COMMAND ${PROJECT_NAME} encrypt)
+add_test(NAME Decrypt COMMAND ${PROJECT_NAME} decrypt)

@@ -86,7 +86,7 @@ namespace U {
     }
 
     bool Nyb::operator== ( const Nyb &other ) const {
-        return this->nyb == other.nyb ? 1 : 0;
+        return this->toUInt ( ) == other.toUInt ( ) ? 1 : 0;
     }
 
     uint8_t Nyb::toUInt ( ) const {
