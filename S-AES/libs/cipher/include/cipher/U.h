@@ -57,7 +57,10 @@ namespace U {
 
         // Other Operators
         Nyb operator* ( const Nyb &other ) const;
+        bool operator< ( const Nyb &other ) const;
+        bool operator> ( const Nyb &other ) const;
         bool operator== ( const Nyb &other ) const;
+        Nyb operator++ ( int i );
 
         // Struct Functions
         uint8_t toUInt ( ) const;
@@ -108,7 +111,11 @@ namespace U {
 
         // Other operators
 
+        bool operator< ( const Word &other ) const;
+        bool operator> ( const Word &other ) const;
         bool operator== ( const Word &other ) const;
+
+        Word operator++ ( int i );
 
         /**
          * @brief Accesses a specific row of the Word.
@@ -170,11 +177,10 @@ namespace U {
         Matrix ( );
 
         /**
-         * @brief Constructor for a 2x2 matrix.
-         * @param w0 The Word on the left of this Matrix.
-         * @param w1 The Word on the right of this Matrix.
+         * @brief Constructor for a 2x2 matrix from a uint16_t.
+         * @param value The value to set this Matrix to.
          */
-        Matrix ( const Word &w0, const Word &w1 );
+        Matrix ( const uint16_t &value );
 
         /**
          * @brief Constructor for a 2x2 matrix.
@@ -187,6 +193,13 @@ namespace U {
                  const Nyb &n10,
                  const Nyb &n01,
                  const Nyb &n11 );
+
+        /**
+         * @brief Constructor for a 2x2 matrix.
+         * @param w0 The Word on the left of this Matrix.
+         * @param w1 The Word on the right of this Matrix.
+         */
+        Matrix ( const Word &w0, const Word &w1 );
 
         /**
          * @brief Constructor for a 2x2 matrix.
@@ -208,8 +221,11 @@ namespace U {
         // Other operators
 
         Matrix operator* ( const Matrix &other ) const;
-
+        bool operator< ( const Matrix &other ) const;
+        bool operator> ( const Matrix &other ) const;
         bool operator== ( const Matrix &other ) const;
+        Matrix operator++ ( int i );
+        Matrix operator+ ( const int &i ) const;
 
         /**
          * @brief Accesses a specific row of the matrix.

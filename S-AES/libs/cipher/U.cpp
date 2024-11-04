@@ -85,8 +85,34 @@ namespace U {
         return Nyb ( p );
     }
 
+    bool Nyb::operator< ( const Nyb &other ) const {
+        return this->toUInt ( ) < other.toUInt ( ) ? 1 : 0;
+    }
+
+    bool Nyb::operator> ( const Nyb &other ) const {
+        return this->toUInt ( ) > other.toUInt ( ) ? 1 : 0;
+    }
+
     bool Nyb::operator== ( const Nyb &other ) const {
         return this->toUInt ( ) == other.toUInt ( ) ? 1 : 0;
+    }
+
+    Nyb Nyb::operator++ ( int i ) {
+        Nyb temp = *this;
+        if ( nyb != 0xF ) {
+            for ( size_t i = 0; i < 4; i++ ) {
+                if ( nyb[ i ] == 0 ) {
+                    nyb[ i ] = 1;
+                    break;
+                } else {
+                    nyb[ i ] = 0;
+                }
+            }
+        } else {
+            throw std::runtime_error ( "Nyb Overflow! Current Value: "
+                                       + this->toString ( ) );
+        }
+        return temp;
     }
 
     uint8_t Nyb::toUInt ( ) const {
@@ -188,8 +214,30 @@ namespace U {
     // OTHER OPERATORS
     //////////////////
 
+    bool Word::operator< ( const Word &other ) const {
+        return this->word < other.word ? 1 : 0;
+    }
+
+    bool Word::operator> ( const Word &other ) const {
+        return this->word > other.word ? 1 : 0;
+    }
+
     bool Word::operator== ( const Word &other ) const {
         return this->word == other.word ? 1 : 0;
+    }
+
+    Word Word::operator++ ( int i ) {
+        Word temp = *this;
+        if ( word[ 1 ] != 0xF ) {
+            word[ 1 ]++;
+        } else if ( word[ 0 ] != 0xF ) {
+            word[ 0 ]++;
+            word[ 1 ] = 0;
+        } else {
+            throw std::runtime_error ( "Word Overflow! Current Value: "
+                                       + this->toString ( ) );
+        }
+        return temp;
     }
 
     Nyb &Word::operator[] ( const size_t &index ) { return word[ index ]; }
@@ -225,9 +273,9 @@ namespace U {
         matrix[ 1 ] = Word ( );
     }
 
-    Matrix::Matrix ( const Word &w0, const Word &w1 ) {
-        matrix[ 0 ] = w0;
-        matrix[ 1 ] = w1;
+    Matrix::Matrix ( const uint16_t &value ) {
+        matrix[ 0 ] = Word ( value & 0xFF00 );
+        matrix[ 1 ] = Word ( value & 0x00FF );
     }
 
     Matrix::Matrix ( const Nyb &n00,
@@ -238,6 +286,11 @@ namespace U {
         matrix[ 0 ][ 1 ] = n10;
         matrix[ 1 ][ 0 ] = n01;
         matrix[ 1 ][ 1 ] = n11;
+    }
+
+    Matrix::Matrix ( const Word &w0, const Word &w1 ) {
+        matrix[ 0 ] = w0;
+        matrix[ 1 ] = w1;
     }
 
     Matrix::Matrix ( const std::string &s ) {
@@ -317,8 +370,36 @@ namespace U {
         return Matrix ( w0, w1 );
     }
 
+    bool Matrix::operator< ( const Matrix &other ) const {
+        return this->matrix < other.matrix ? 1 : 0;
+    }
+
+    bool Matrix::operator> ( const Matrix &other ) const {
+        return this->matrix > other.matrix ? 1 : 0;
+    }
+
     bool Matrix::operator== ( const Matrix &other ) const {
         return this->matrix == other.matrix ? 1 : 0;
+    }
+
+    Matrix Matrix::operator++ ( int i ) {
+        Matrix temp = *this;
+        if ( matrix[ 1 ] != 0xFF ) {
+            matrix[ 1 ]++;
+        } else if ( matrix[ 0 ] != 0xFF ) {
+            matrix[ 0 ]++;
+            matrix[ 1 ] = 0x00;
+        } else {
+            throw std::invalid_argument ( "Matrix Overflow! Current Value: "
+                                          + this->toString ( ) );
+        }
+        return temp;
+    }
+
+    Matrix Matrix::operator+ ( const int &i ) const {
+        Matrix temp = *this;
+        for ( size_t j; j < i; j++ ) { temp++; }
+        return temp;
     }
 
     Word &Matrix::operator[] ( const size_t &index ) { return matrix[ index ]; }
