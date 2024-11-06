@@ -62,6 +62,13 @@ namespace U {
         bool operator== ( const Nyb &other ) const;
         Nyb operator++ ( int i );
 
+        /**
+         * @brief Accesses a specific bit of the Nyb (const version).
+         * @param index The row index.
+         * @return A const reference to the row vector.
+         */
+        const bool operator[] ( const size_t &index ) const;
+
         // Struct Functions
         uint8_t toUInt ( ) const;
         std::string toString ( ) const;

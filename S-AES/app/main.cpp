@@ -15,7 +15,46 @@ void printHelp ( ) {
     std::cout << "Third arg is our operation, either E for encrypt or D for "
                  "decrypt\n";
 }
+
+void debug ( ) {
+    U::Matrix a = DCA::genRandomMatrix ( );
+    U::Nyb diff = 0x0;
+    U::Matrix b = DCA::createDifference ( a, diff );
+    U::Matrix s1 = DCA::secretEncrypt ( a );
+    U::Matrix s2 = DCA::secretEncrypt ( b );
+    U::Matrix m = DCA::calcDifference ( s1, s2 );
+    std::cout << "a: " << a.toString ( ) << "\n";
+    std::cout << "b: " << b.toString ( ) << "\n";
+    std::cout << "diff: " << diff.toString ( ) << "\n";
+    std::cout << "m: " << m.toString ( ) << "\n";
+
+    std::cout << "-----------------------------------------\n";
+
+    diff = 0x1;
+    b = DCA::createDifference ( a, diff );
+    s1 = DCA::secretEncrypt ( a );
+    s2 = DCA::secretEncrypt ( b );
+    m = DCA::calcDifference ( s1, s2 );
+    std::cout << "a: " << a.toString ( ) << "\n";
+    std::cout << "b: " << b.toString ( ) << "\n";
+    std::cout << "diff: " << diff.toString ( ) << "\n";
+    std::cout << "m: " << m.toString ( ) << "\n";
+
+    std::cout << "-----------------------------------------\n";
+
+    diff = 0x2;
+    b = DCA::createDifference ( a, diff );
+    s1 = DCA::secretEncrypt ( a );
+    s2 = DCA::secretEncrypt ( b );
+    m = DCA::calcDifference ( s1, s2 );
+    std::cout << "a: " << a.toString ( ) << "\n";
+    std::cout << "b: " << b.toString ( ) << "\n";
+    std::cout << "diff: " << diff.toString ( ) << "\n";
+    std::cout << "m: " << m.toString ( ) << "\n";
+    exit ( 1 );
+}
 int main ( const int argc, const char *argv[] ) {
+    debug ( );
     if ( argc < 4 ) {
         printHelp ( );
         return 1;

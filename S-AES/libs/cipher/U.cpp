@@ -115,6 +115,10 @@ namespace U {
         return temp;
     }
 
+    const bool Nyb::operator[] ( const size_t &index ) const {
+        return nyb[ index ];
+    }
+
     uint8_t Nyb::toUInt ( ) const {
         return static_cast< uint8_t > ( this->nyb.to_ulong ( ) );
     }
@@ -134,8 +138,8 @@ namespace U {
     }
 
     Word::Word ( const uint8_t &value ) {
-        word[ 0 ] = value & 0xF0;
-        word[ 1 ] = value & 0x0F;
+        word[ 0 ] = Nyb ( value >> 4 );
+        word[ 1 ] = Nyb ( value & 0x0F );
     }
 
     Word::Word ( const Nyb &n0, const Nyb &n1 ) {
@@ -274,7 +278,7 @@ namespace U {
     }
 
     Matrix::Matrix ( const uint16_t &value ) {
-        matrix[ 0 ] = Word ( value & 0xFF00 );
+        matrix[ 0 ] = Word ( value >> 8 );
         matrix[ 1 ] = Word ( value & 0x00FF );
     }
 
