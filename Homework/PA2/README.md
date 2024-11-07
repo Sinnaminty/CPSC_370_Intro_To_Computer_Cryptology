@@ -3,6 +3,7 @@
 > assigned in my CPSC 370 : Introduction to Computer Cryptology class.
 
 ---
+
 ## Assignment 
 **Part I: S-DES:**
 The purpose of this assignment is to implement an algorithm for encryption with the simplified DES algorithm.
@@ -17,22 +18,27 @@ plaintext2 = "110011001100110011001100110011001100110011001100" and
 plaintext3 = "110011001100100011001100110011001100110011001100".
 
 ---
-## Usage
 
+## Building the Project 
 Create the `build` directory and configure the build system:
-
 ```bash
 cmake -S . -B build # Or `cmake -D BUILD_TESTING=OFF -B build` to skip tests. 
 ```
-
 Build the project:
 ```bash
 cmake --build build
 ```
 Inspect the `build` directory to find the application and the tests.
-
 Optionally, run the tests with `ctest` by typing:
 ```bash
 cmake -E chdir build ctest
 ```
-Much love, Sin
+---
+
+## Usage
+```bash
+./build/app/app
+```
+---
+
+###### Powered by caffeine and lambda functions.
