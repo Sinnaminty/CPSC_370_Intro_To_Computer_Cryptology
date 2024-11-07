@@ -63,17 +63,27 @@ namespace U {
         Nyb operator++ ( int i );
 
         /**
-         * @brief Accesses a specific bit of the Nyb (const version).
+         * @brief Accesses a specific bit of this Nyb (const version).
          * @param index The row index.
          * @return A const reference to the row vector.
          */
         const bool operator[] ( const size_t &index ) const;
 
         // Struct Functions
+
         uint8_t toUInt ( ) const;
+
+        /**
+         * @brief Converts this Nyb to a string representation.
+         * @return A string that represents this Nyb.
+         */
         std::string toString ( ) const;
     };
 
+    /**
+     * @struct Word
+     * @brief An Array of 2 Nybs.
+     */
     struct Word {
         using Data = std::array< Nyb, 2 >;
         Data word;
@@ -84,7 +94,7 @@ namespace U {
         Word ( );
 
         /**
-         * @brief Constructs an Word from a uint8_t.
+         * @brief Constructs a Word from a uint8_t.
          * @param value The value to set this Word to.
          */
         Word ( const uint8_t &value );
@@ -125,14 +135,14 @@ namespace U {
         Word operator++ ( int i );
 
         /**
-         * @brief Accesses a specific row of the Word.
+         * @brief Accesses a specific row of this Word.
          * @param index The row index.
          * @return A reference to the row vector.
          */
         Nyb &operator[] ( const size_t &index );
 
         /**
-         * @brief Accesses a specific row of the Word (const version).
+         * @brief Accesses a specific row of this Word (const version).
          * @param index The row index.
          * @return A const reference to the row vector.
          */
@@ -141,60 +151,63 @@ namespace U {
         // Iterators
 
         /**
-         * @brief Returns an iterator to the beginning of the Word.
-         * @return An iterator to the first row of the Word.
+         * @brief Returns an iterator to the beginning of this Word.
+         * @return An iterator to the first row of this Word.
          */
         Data::iterator begin ( );
 
         /**
-         * @brief Returns a const iterator to the beginning of the Word.
-         * @return A const iterator to the first row of the Word.
+         * @brief Returns a const iterator to the beginning of this Word.
+         * @return A const iterator to the first row of this Word.
          */
         Data::const_iterator begin ( ) const;
 
         /**
-         * @brief Returns an iterator to the end of the Word.
-         * @return An iterator to the row past the last row of the Word.
+         * @brief Returns an iterator to the end of this Word.
+         * @return An iterator to the row past the last row of this Word.
          */
         Data::iterator end ( );
 
         /**
-         * @brief Returns a const iterator to the end of the Word.
-         * @return A const iterator to the row past the last row of the Word.
+         * @brief Returns a const iterator to the end of this Word.
+         * @return A const iterator to the row past the last row of this Word.
          */
         Data::const_iterator end ( ) const;
 
         uint8_t toUInt ( ) const;
 
+        /**
+         * @brief Converts this Word to a string representation.
+         * @return A string that represents this Word.
+         */
         std::string toString ( ) const;
     };
 
     /**
      * @struct Matrix
-     * @brief A Matrix of 4 Nybs.
+     * @brief A Matrix of 4 Nybs organized in a 2x2 grid.
      */
     struct Matrix {
         using Data = std::array< Word, 2 >;
         Data matrix;
 
         /**
-         * @brief Constructor for a 2x2 matrix. Creates an empty Matrix filled
-         * with zeros.
+         * @brief Constructs a 2x2 matrix filled with zeros.
          */
         Matrix ( );
 
         /**
-         * @brief Constructor for a 2x2 matrix from a uint16_t.
-         * @param value The value to set this Matrix to.
+         * @brief Constructs a 2x2 matrix from a uint16_t.
+         * @param value The value to initialize this Matrix with.
          */
         Matrix ( const uint16_t &value );
 
         /**
-         * @brief Constructor for a 2x2 matrix.
-         * @param n00 The Nyb in the top left corner of this Matrix.
-         * @param n10 The Nyb in the bottom left corner of this Matrix.
-         * @param n01 The Nyb in the top right corner of this Matrix.
-         * @param n11 The Nyb in the bottom right corner of this Matrix.
+         * @brief Constructs a 2x2 matrix from individual Nyb values.
+         * @param n00 The top-left Nyb of this matrix.
+         * @param n10 The bottom-left Nyb of this matrix.
+         * @param n01 The top-right Nyb of this matrix.
+         * @param n11 The bottom-right Nyb of this matrix.
          */
         Matrix ( const Nyb &n00,
                  const Nyb &n10,
@@ -202,20 +215,20 @@ namespace U {
                  const Nyb &n11 );
 
         /**
-         * @brief Constructor for a 2x2 matrix.
-         * @param w0 The Word on the left of this Matrix.
-         * @param w1 The Word on the right of this Matrix.
+         * @brief Constructs a 2x2 matrix from two Word values.
+         * @param w0 The left column Word.
+         * @param w1 The right column Word.
          */
         Matrix ( const Word &w0, const Word &w1 );
 
         /**
-         * @brief Constructor for a 2x2 matrix.
-         * @param s The string containing Nybs for this Matrix. Will throw an
-         * exception if the string is not valid.
+         * @brief Constructs a 2x2 matrix from a string representation.
+         * @param s A string to initialize this Matrix with. Throws an exception
+         * if the string is invalid.
          */
         Matrix ( const std::string &s );
 
-        // Bit wise Operators
+        // Bitwise Operators
         Matrix operator& ( const Matrix &other ) const;
         Matrix operator| ( const Matrix &other ) const;
         Matrix operator~( ) const;
@@ -235,48 +248,48 @@ namespace U {
         Matrix operator+ ( const int &i ) const;
 
         /**
-         * @brief Accesses a specific row of the matrix.
+         * @brief Accesses a specific row of this matrix.
          * @param index The row index.
-         * @return A reference to the row vector.
+         * @return A reference to the Word at the specified row.
          */
         Word &operator[] ( const size_t &index );
 
         /**
-         * @brief Accesses a specific row of the matrix (const version).
+         * @brief Accesses a specific row of this matrix (const version).
          * @param index The row index.
-         * @return A const reference to the row vector.
+         * @return A const reference to the Word at the specified row.
          */
         const Word &operator[] ( const size_t &index ) const;
 
         // Iterators
 
         /**
-         * @brief Returns an iterator to the beginning of the matrix.
-         * @return An iterator to the first row of the matrix.
+         * @brief Returns an iterator to the beginning of this matrix.
+         * @return An iterator to the first row of this matrix.
          */
         Data::iterator begin ( );
 
         /**
-         * @brief Returns a const iterator to the beginning of the matrix.
-         * @return A const iterator to the first row of the matrix.
+         * @brief Returns a const iterator to the beginning of this matrix.
+         * @return A const iterator to the first row of this matrix.
          */
         Data::const_iterator begin ( ) const;
 
         /**
-         * @brief Returns an iterator to the end of the matrix.
-         * @return An iterator to the row past the last row of the matrix.
+         * @brief Returns an iterator to the end of this matrix.
+         * @return An iterator to the row past the last row of this matrix.
          */
         Data::iterator end ( );
 
         /**
-         * @brief Returns a const iterator to the end of the matrix.
-         * @return A const iterator to the row past the last row of the matrix.
+         * @brief Returns a const iterator to the end of this matrix.
+         * @return A const iterator to the row past the last row of this matrix.
          */
         Data::const_iterator end ( ) const;
 
         /**
-         * @brief Returns a string representation of this Matrix.
-         * @return A string representation of this Matrix.
+         * @brief Converts the matrix to a string representation.
+         * @return A string that represents this matrix.
          */
         std::string toString ( ) const;
     };
