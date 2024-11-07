@@ -11,7 +11,7 @@
 
 ---
 
-## Usage
+## Building the Project 
 Create the `build` directory and configure the build system:
 ```bash
 cmake -S . -B build # Or `cmake -D BUILD_TESTING=OFF -B build` to skip tests. 
@@ -25,4 +25,13 @@ Optionally, run the tests with `ctest` by typing:
 ```bash
 cmake -E chdir build ctest
 ```
-Much love, Sin
+
+---
+
+## Usage
+```bash
+./bulld/app/app [plainText] [key] [E/D]
+```
+---
+
+###### Powered by caffeine and lambda functions.
