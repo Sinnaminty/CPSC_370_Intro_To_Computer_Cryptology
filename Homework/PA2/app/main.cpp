@@ -12,6 +12,13 @@ void printPartOne ( ) {
 
     std::cout << "Decrypt:\n";
     SDES::printOneRound ( SDES::Op::DECRYPT, "001010110101", "111000111" );
+
+    std::cout << "Item 2.) 2 Rounds Encryption and Decryption.\n\n";
+    std::cout << "Encrypt:\n";
+    SDES::printTwoRounds ( SDES::Op::ENCRYPT, "011100100110", "111000111" );
+
+    std::cout << "Decrypt:\n";
+    SDES::printTwoRounds ( SDES::Op::DECRYPT, "001000000111", "111000111" );
 }
 int main ( const int argc, const char *argv[] ) {
     printPartOne ( );

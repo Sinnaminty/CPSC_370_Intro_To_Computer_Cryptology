@@ -110,4 +110,68 @@ namespace SDES {
         }
     }
 
+    void printTwoRounds ( const SDES::Op &op,
+                          const std::string &text,
+                          const std::string &key ) {
+        std::string result;
+        if ( op == SDES::Op::ENCRYPT ) {
+            std::string l0 = text.substr ( 0, 6 );
+            std::string r0 = text.substr ( 6, 6 );
+            std::string k0 = key.substr ( 0, 8 );
+
+            std::string l1 = r0;
+            std::string r1 = logicalXor ( l0, func ( r0, k0 ) );
+
+            std::string k1 = key.substr ( 1, 8 );
+            std::string l2 = r1;
+            std::string r2 = logicalXor ( l1, func ( r1, k1 ) );
+
+            std::cout << "P = " + text + "\n";
+            std::cout << "K = " + key + "\n";
+            std::cout << "\n";
+
+            std::cout << "k0 = " + k0 + "\n";
+            std::cout << "l1 = " + l1 + "\n";
+            std::cout << "r1 = " + r1 + "\n";
+            std::cout << "\n";
+
+            std::cout << "k1 = " + k1 + "\n";
+            std::cout << "l2 = " + l2 + "\n";
+            std::cout << "r2 = " + r2 + "\n";
+            std::cout << "\n";
+
+            std::cout << "C = " + r2 + l2 + "\n";
+            std::cout << "\n";
+
+        } else if ( op == SDES::Op::DECRYPT ) {
+            std::string l2 = text.substr ( 6, 6 );
+            std::string r2 = text.substr ( 0, 6 );
+            std::string k1 = key.substr ( 1, 8 );
+
+            std::string r1 = l2;
+            std::string l1 = logicalXor ( r2, func ( r1, k1 ) );
+
+            std::string k0 = key.substr ( 0, 8 );
+            std::string r0 = l1;
+            std::string l0 = logicalXor ( r1, func ( r0, k0 ) );
+
+            std::cout << "C = " + text + "\n";
+            std::cout << "K = " + key + "\n";
+            std::cout << "\n";
+
+            std::cout << "k1 = " + k1 + "\n";
+            std::cout << "l1 = " + l1 + "\n";
+            std::cout << "r1 = " + r1 + "\n";
+            std::cout << "\n";
+
+            std::cout << "k0 = " + k0 + "\n";
+            std::cout << "l0 = " + l0 + "\n";
+            std::cout << "r0 = " + r0 + "\n";
+            std::cout << "\n";
+
+            std::cout << "P = " + l0 + r0 + "\n";
+            std::cout << "\n";
+        }
+    }
+
 }  // namespace SDES

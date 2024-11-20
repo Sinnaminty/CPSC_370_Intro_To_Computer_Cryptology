@@ -24,6 +24,10 @@ namespace SDES {
                          const std::string &text,
                          const std::string &key );
 
+    void printTwoRounds ( const Op &op,
+                          const std::string &text,
+                          const std::string &key );
+
 }  // namespace SDES
 
 #endif  // S_DES_H
