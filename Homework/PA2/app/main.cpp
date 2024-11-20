@@ -1,18 +1,19 @@
-#include <cstring>
-#include <iostream>
-void printHelp ( ) {
-    std::cout << "-----------------------------------------------------\n";
-    std::cout << "PROGRAMMING ASSIGNMENT 2: S-DES & CBC\n";
-    std::cout << "By: Aiden Rivera\n";
-    std::cout << "-----------------------------------------------------\n";
-    std::cout << "USAGE: \n";
-    std::cout << "Working on it! \n";
-}
+#include <cipher/SDES.h>
 
+#include <iostream>
+
+void printPartOne ( ) {
+    std::cout << "---------------------------------------\n";
+    std::cout << "PART I: S-DES\n";
+    std::cout << "---------------------------------------\n";
+    std::cout << "Item 1.) 1 Round Encryption and Decryption.\n\n";
+    std::cout << "Encrypt:\n";
+    SDES::printOneRound ( SDES::Op::ENCRYPT, "100010110101", "111000111" );
+
+    std::cout << "Decrypt:\n";
+    SDES::printOneRound ( SDES::Op::DECRYPT, "001010110101", "111000111" );
+}
 int main ( const int argc, const char *argv[] ) {
-    if ( argc < 2 ) {
-        printHelp ( );
-        return 1;
-    }
+    printPartOne ( );
     return 0;
 }

@@ -1,7 +1,6 @@
 project(cipher)
 
 add_library(${PROJECT_NAME}
-  U.cpp
   SDES.cpp
 )
 
