@@ -3,8 +3,11 @@
 #include <iostream>
 #include <map>
 
-namespace SDES {
+#include "cipher/U.h"
 
+using namespace U;
+
+namespace SDES {
     // Logical XOR of two strings
     std::string logicalXor ( const std::string &a, const std::string &b ) {
         std::string result;
@@ -58,11 +61,11 @@ namespace SDES {
     }
 
     // Print the result of encryption or decryption
-    void printOneRound ( const SDES::Op &op,
+    void printOneRound ( const Op &op,
                          const std::string &text,
                          const std::string &key ) {
         std::string result;
-        if ( op == SDES::Op::ENCRYPT ) {
+        if ( op == Op::ENCRYPT ) {
             std::string l0 = text.substr ( 0, 6 );
             std::string r0 = text.substr ( 6, 6 );
             std::string k0 = key.substr ( 0, 8 );
@@ -83,7 +86,7 @@ namespace SDES {
             std::cout << "C = " + r1 + l1 + "\n";
             std::cout << "\n";
 
-        } else if ( op == SDES::Op::DECRYPT ) {
+        } else if ( op == Op::DECRYPT ) {
             std::string l1 = text.substr ( 6, 6 );
             std::string r1 = text.substr ( 0, 6 );
             std::string k0 = key.substr ( 0, 8 );
@@ -110,11 +113,11 @@ namespace SDES {
         }
     }
 
-    void printTwoRounds ( const SDES::Op &op,
+    void printTwoRounds ( const Op &op,
                           const std::string &text,
                           const std::string &key ) {
         std::string result;
-        if ( op == SDES::Op::ENCRYPT ) {
+        if ( op == Op::ENCRYPT ) {
             std::string l0 = text.substr ( 0, 6 );
             std::string r0 = text.substr ( 6, 6 );
             std::string k0 = key.substr ( 0, 8 );
@@ -143,7 +146,7 @@ namespace SDES {
             std::cout << "C = " + r2 + l2 + "\n";
             std::cout << "\n";
 
-        } else if ( op == SDES::Op::DECRYPT ) {
+        } else if ( op == Op::DECRYPT ) {
             std::string l2 = text.substr ( 6, 6 );
             std::string r2 = text.substr ( 0, 6 );
             std::string k1 = key.substr ( 1, 8 );
