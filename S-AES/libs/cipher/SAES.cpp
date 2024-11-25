@@ -1,5 +1,8 @@
 #include "cipher/SAES.h"
 
+#include <iostream>
+#include <stdexcept>
+
 #include "cipher/U.h"
 
 namespace SAES {
@@ -126,4 +129,21 @@ namespace SAES {
         return C * s;
     }
 
+    std::vector< Matrix > bruteForce ( const U::Matrix &p,
+                                       const U::Matrix &c ) {
+        std::vector< Matrix > retVec;
+        Matrix ret = 0;
+        while ( ret != Matrix ( 0xFFFF ) ) {
+            Matrix guess = applyCipher ( p, ret, Op::ENCRYPT );
+            if ( guess.toString ( ) == c.toString ( ) ) {
+                retVec.push_back ( ret );
+            }
+            ret++;
+        }
+        if ( ! retVec.empty ( ) ) {
+            return retVec;
+        } else {
+            throw std::runtime_error ( "retVec Empty!" );
+        }
+    }
 }  // namespace SAES

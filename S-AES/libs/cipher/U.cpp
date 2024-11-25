@@ -447,4 +447,5 @@ namespace U {
 
         return Matrix ( n );
     }
+
 }  // namespace U

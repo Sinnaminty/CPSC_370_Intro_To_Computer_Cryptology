@@ -1,6 +1,9 @@
 #ifndef SAES_H
 #define SAES_H
 
+#include <optional>
+#include <vector>
+
 #include "U.h"
 
 namespace SAES {
@@ -116,6 +119,14 @@ namespace SAES {
      */
     U::Matrix invMixColumns ( const U::Matrix &s );
 
+    /**
+     * @brief Function to Brute Force S-AES.
+     * @param p Plaintext Matrix.
+     * @param k Key Matrix.
+     * @return The possible keys.
+     */
+    std::vector< U::Matrix > bruteForce ( const U::Matrix &p,
+                                          const U::Matrix &c );
 };  // namespace SAES
 
 #endif  // SAES_H
