@@ -294,6 +294,12 @@ namespace U {
         std::string toString ( ) const;
     };
 
+    /**
+     * @brief Generates a random Matrix.
+     * @return A random Matrix.
+     */
+    U::Matrix genRandomMatrix ( );
+
 };  // namespace U
 
 #endif  // U_H
