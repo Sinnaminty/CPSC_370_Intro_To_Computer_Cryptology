@@ -30,10 +30,12 @@ cmake -E chdir build ctest
 ---
 
 ## Usage
+
 ```bash
     ./app -p <plaintext> -c <ciphertext> -k <key matrix> --<encrypt/decrypt> --bruteForce
 ```
-Options:
+
+## Options:
         -p, --plaintext  <value>  Plaintext input matrix
         -c, --ciphertext <value>  Ciphertext input matrix
         -k, --key        <value>  Key matrix
