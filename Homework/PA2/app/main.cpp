@@ -2,6 +2,8 @@
 #include <cipher/U.h>
 
 #include <iostream>
+
+#include "cipher/CBC.h"
 using namespace U;
 void printPartOne ( ) {
     std::cout << "---------------------------------------\n";
@@ -29,7 +31,19 @@ void printPartTwo ( ) {
     std::cout << "Item 3.) CBC Encrypt and Decrypt.\n\n";
 
     std::cout << "Encrypt:\n";
+    const std::string p = "100010110101011100100110";
+    const std::string k = "111000111";
+    const std::string i = "111111111111";
+    std::cout << "p = " << p << "\n";
+    CBC::printCBC ( p, k, i, Op::ENCRYPT );
+
+    std::cout << "Decrypt:\n";
+
+    const std::string c = "100110000100100011000010";
+    std::cout << "C = " << c << "\n";
+    CBC::printCBC ( c, k, i, Op::DECRYPT );
 }
+
 int main ( const int argc, const char *argv[] ) {
     printPartOne ( );
     printPartTwo ( );
