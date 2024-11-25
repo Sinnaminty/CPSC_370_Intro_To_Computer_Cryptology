@@ -42,6 +42,15 @@ void printPartTwo ( ) {
     const std::string c = "100110000100100011000010";
     std::cout << "C = " << c << "\n";
     CBC::printCBC ( c, k, i, Op::DECRYPT );
+
+    std::cout << "Item 4.) One bit difference.\n\n";
+
+    const std::string p2 = "110011001100110011001100110011001100110011001100";
+    const std::string p3 = "110011001100100011001100110011001100110011001100";
+    std::cout << "p2 = " << p2 << "\n";
+    std::cout << "p3 = " << p3 << "\n";
+
+    CBC::printCBC2 ( p2, p3, k, i );
 }
 
 int main ( const int argc, const char *argv[] ) {

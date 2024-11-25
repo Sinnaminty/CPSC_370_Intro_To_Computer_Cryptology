@@ -9,6 +9,11 @@ namespace CBC {
                     const std::string &k,
                     const std::string &i,
                     const U::Op &op );
+
+    void printCBC2 ( const std::string &p1,
+                     const std::string &p2,
+                     const std::string &k,
+                     const std::string &i );
 }  // namespace CBC
 
 #endif  // CBC_H
