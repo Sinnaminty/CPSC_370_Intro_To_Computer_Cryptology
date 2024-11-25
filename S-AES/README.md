@@ -32,16 +32,13 @@ cmake -E chdir build ctest
 ## Usage
 
 ```bash
-    ./app -p <plaintext> -c <ciphertext> -k <key matrix> --<encrypt/decrypt> --bruteForce
+    .build/app/app -p <plaintext> -c <ciphertext> -k <key matrix>
 ```
 
 ## Options:
         -p, --plaintext  <value>  Plaintext input matrix
         -c, --ciphertext <value>  Ciphertext input matrix
         -k, --key        <value>  Key matrix
-        --encrypt                 Perform encryption (requires -p and -k)
-        --decrypt                 Perform decryption (requires -c and -k)
-        --bruteForce              Perform brute force (requires any two of -p, -c, -k)
 ---
 
 ###### Powered by caffeine and lambda functions.
