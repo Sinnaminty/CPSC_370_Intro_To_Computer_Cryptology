@@ -1,6 +1,6 @@
 #ifndef U_H
 #define U_H
-
+#include <string>
 namespace U {
 
     /**
@@ -12,6 +12,7 @@ namespace U {
         DECRYPT  /**< Decryption operation */
     };
 
+    std::string logicalXor ( const std::string &a, const std::string &b );
 }  // namespace U
 
 #endif  // U_H

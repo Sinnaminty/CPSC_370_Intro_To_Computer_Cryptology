@@ -6,13 +6,13 @@
 #include "U.h"
 
 namespace SDES {
-
-    std::string logicalXor ( const std::string &a, const std::string &b );
     std::string s1Table ( const std::string &s1 );
     std::string s2Table ( const std::string &s2 );
     std::string sTable ( const std::string &s );
     std::string expand ( const std::string &x );
     std::string func ( const std::string &r, const std::string &k );
+    std::string encrypt ( const std::string &p, const std::string &k );
+    std::string decrypt ( const std::string &c, const std::string &k );
     void printOneRound ( const U::Op &op,
                          const std::string &text,
                          const std::string &key );

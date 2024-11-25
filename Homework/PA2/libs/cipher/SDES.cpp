@@ -8,15 +8,6 @@
 using namespace U;
 
 namespace SDES {
-    // Logical XOR of two strings
-    std::string logicalXor ( const std::string &a, const std::string &b ) {
-        std::string result;
-        for ( size_t i = 0; i < a.length ( ); i++ ) {
-            ( a[ i ] == b[ i ] ) ? result += "0" : result += "1";
-        }
-        return result;
-    }
-
     // S1 Table
     std::string s1Table ( const std::string &s1 ) {
         const std::map< std::string, std::string > s1map {
@@ -58,6 +49,36 @@ namespace SDES {
     // Function to apply S-DES operations
     std::string func ( const std::string &r, const std::string &k ) {
         return sTable ( logicalXor ( expand ( r ), k ) );
+    }
+
+    std::string encrypt ( const std::string &p, const std::string &k ) {
+        std::string l0 = p.substr ( 0, 6 );
+        std::string r0 = p.substr ( 6, 6 );
+        std::string k0 = k.substr ( 0, 8 );
+
+        std::string l1 = r0;
+        std::string r1 = logicalXor ( l0, func ( r0, k0 ) );
+
+        std::string k1 = k.substr ( 1, 8 );
+        std::string l2 = r1;
+        std::string r2 = logicalXor ( l1, func ( r1, k1 ) );
+
+        return ( r2 + l2 );
+    }
+
+    std::string decrypt ( const std::string &c, const std::string &k ) {
+        std::string l2 = c.substr ( 6, 6 );
+        std::string r2 = c.substr ( 0, 6 );
+        std::string k1 = k.substr ( 1, 8 );
+
+        std::string r1 = l2;
+        std::string l1 = logicalXor ( r2, func ( r1, k1 ) );
+
+        std::string k0 = k.substr ( 0, 8 );
+        std::string r0 = l1;
+        std::string l0 = logicalXor ( r1, func ( r0, k0 ) );
+
+        return ( l0 + r0 );
     }
 
     // Print the result of encryption or decryption
